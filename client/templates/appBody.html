@@ -1,0 +1,17 @@
+<!-- <body>
+    
+    
+</body>
+ -->
+<template name="appBody">
+    <div class="off-canvas left is-active" id="example-canvas-left" position="left" zf-closable="offcanvas">
+    <div class="grid-content ng-scope">
+        <a href="#" class="close-button">×</a>
+        <h3>Test</h3>
+        <a href="{{pathFor 'about'}}">About</a>
+    </div>
+    </div>
+    <div id="content-container" class="grid-frame vertical">
+        {{> yield}}
+    </div>
+</template>

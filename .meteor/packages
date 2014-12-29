@@ -11,3 +11,6 @@ iron:router
 percolate:velocityjs
 mrt:moment
 standard-app-packages
+accounts-facebook
+accounts-twitter
+service-configuration
