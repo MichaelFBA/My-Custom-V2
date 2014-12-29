@@ -1,0 +1,31 @@
+<head>
+    <title>My Custom</title>
+    <meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+    <div class="off-canvas left is-active" id="example-canvas-left" position="left" zf-closable="offcanvas">
+    <div class="grid-content ng-scope">
+        <a href="#" class="close-button">×</a>
+        <h3>This is a left off-canvas menu.</h3>
+    </div>
+    </div>
+
+    <div class="grid-frame vertical">
+        <div class="dark title-bar">
+            <span class="title center">Center</span>
+            <span class="right"><a href="#">Right</a></span>
+        </div>
+        <div class="grid-block">
+            <div class="grid-content">
+                <a class="button open-menu">Open Off-canvas</a>
+            </div>
+        </div>
+        <div class="grid-block shrink"> footer </div>
+    </div>
+</template>

@@ -1,0 +1,4 @@
+{
+	"enableAutoprefixer": true,
+    "file": "client/stylesheets/scss/foundation.scss"
+}
