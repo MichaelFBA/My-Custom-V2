@@ -1,15 +1,18 @@
-<!-- <body>
-    
-    
-</body>
- -->
 <template name="appBody">
-    <div class="off-canvas left is-active" id="example-canvas-left" position="left" zf-closable="offcanvas">
-    <div class="grid-content ng-scope">
-        <a href="#" class="close-button">×</a>
-        <h3>Test</h3>
-        <a href="{{pathFor 'about'}}">About</a>
-    </div>
+    <div class="off-canvas left {{#if menuOpen}}is-active{{/if}}" position="left">
+        <aside id="menu" class="left-off-canvas-menu">
+
+          <ul class="vertical menu-bar">
+            <li><a href="{{pathFor 'about'}}">About</a></li>
+            <li><a href="{{pathFor 'search'}}">Search</a></li>
+            <li><a href="#">Item 3</a></li>
+            <li><a href="#">Item 4</a></li>
+            <li><a href="#">Item 5</a></li>
+            <li><a href="#">Item 6</a></li>
+            <li><a href="#">Item 7</a></li>
+          </ul>
+
+        </aside>
     </div>
     <div id="content-container" class="grid-frame vertical">
         {{> yield}}

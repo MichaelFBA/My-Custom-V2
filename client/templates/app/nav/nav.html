@@ -1,0 +1,20 @@
+<template name="nav">
+    <nav class="{{#if black}}dark{{/if}} title-bar">
+	    <span class="left">
+	      {{#if back}}
+	        <a class="nav-item js-back" href="#"><i class="fa fa-chevron-left"></i></a>
+	      {{else}}
+	        <a class="nav-item js-menu" href="#"><i class="fa fa-bars"></i></a>
+	      {{/if}}
+	    </span>
+
+	    <span class="title center">
+	      {{title}}
+	    </span>
+
+	    <span class="right">
+	      {{> Template.contentBlock }}
+	    </span>
+    </nav>
+    {{initFoundation}}
+</template>
