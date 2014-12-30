@@ -1,0 +1,29 @@
+.image-profile{width: 60px; height:60px;}
+.scroll-section{ overflow-x: scroll;-webkit-overflow-scrolling: touch; }
+
+.tabs{
+	-webkit-flex-flow: row nowrap;
+	-ms-flex-flow: row nowrap;
+	flex-flow: row nowrap;
+}
+.tabs .tab-item{
+	-webkit-flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+	background-color: #ffffff;
+}
+.tabs .tab-item:hover {
+	background: transparent;
+}
+.tabs .tab-item.is-active{
+	background: transparent;
+	position: relative;
+}
+.tabs .tab-item.is-active:before {
+	content: "";
+	border-bottom: 5px solid #FFCD03;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	left: 0px;
+}

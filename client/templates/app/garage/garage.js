@@ -1,43 +1,6 @@
-var TAB_KEY = 'feed';
-
-Template.garage.created = function() {
-    if (Router.current().params.activityId)
-        Template.garage.setTab('feed');
-    else
-        Template.garage.setTab('garage');
-}
-
+var TAB_KEY = 'tabs';
 Template.garage.rendered = function() {
-    this.$('.garage').touchwipe({
-        wipeDown: function() {
-            if (Session.equals(TAB_KEY, 'garage'))
-                Template.garage.setTab('custom')
-        },
-        preventDefaultEvents: false
-    });
-    this.$('.attribution-garage').touchwipe({
-        wipeUp: function() {
-            if (!Session.equals(TAB_KEY, 'garage'))
-                Template.garage.setTab('garage')
-        },
-        preventDefaultEvents: false
-    });
-}
-
-// CSS transitions can't tell the difference between e.g. reaching
-//   the "custom" tab from the expanded state or the "feed" tab
-//   so we need to help the transition out by attaching another
-//   class that indicates if the feed tab should slide out of the
-//   way smoothly, right away, or after the transition is over
-Template.garage.setTab = function(tab) {
-    var lastTab = Session.get(TAB_KEY);
-    Session.set(TAB_KEY, tab);
-
-    var fromGarage = (lastTab === 'garage') && (tab !== 'garage');
-    $('.feed-scrollable').toggleClass('instant', fromGarage);
-
-    var toGarage = (lastTab !== 'garage') && (tab === 'garage');
-    $('.feed-scrollable').toggleClass('delayed', toGarage);
+    Session.set(TAB_KEY,'Info');
 }
 
 Template.garage.helpers({
@@ -50,18 +13,7 @@ Template.garage.helpers({
     activeTabClass: function() {
         return Session.get(TAB_KEY);
     },
-    bookmarked: function() {
-        return Meteor.user() && _.include(Meteor.user().bookmarkedRecipeNames, this.name);
-    },
-    activities: function() {
-        return Activities.find({
-            recipeName: this.name
-        }, {
-            sort: {
-                date: -1
-            }
-        });
-    },
+
     getMedia: function(id) {
         return Activities.find({
             userId: id
@@ -89,19 +41,9 @@ Template.garage.helpers({
 });
 
 Template.garage.events({
-    'click .js-add-bookmark': function(event) {
-        event.preventDefault();
 
-        if (!Meteor.userId())
-            return Overlay.open('authOverlay');
-
-        Meteor.call('bookmarkRecipe', this.name);
-    },
-
-    'click .js-remove-bookmark': function(event) {
-        event.preventDefault();
-
-        Meteor.call('unbookmarkRecipe', this.name);
+    'click .tab-item': function(event){
+        Session.set(TAB_KEY, $(event.target).text() );
     },
 
     'click .js-show-customs': function(event) {

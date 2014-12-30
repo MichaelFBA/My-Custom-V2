@@ -1,0 +1,27 @@
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+/*  Colors */
+.white{ color: #ffffff;}
+.whiteSmokeBg{ background-color: #F5F5F5;}
+.btnTwitter { background-color: #46c8f5 !important;}
+.btnFacebook { background-color: #3b5999 !important; }
+
+/*  Fonts  */
+.avenirBlack{ font-family: 'AvenirBlack'; }
+.avenirBook{ font-family: 'AvenirBook'; }
+
+/* Margin and Padding */
+.p1rem{padding:1rem;}
+
+/* Global Styles */
+.image-profile {
+  	-webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}

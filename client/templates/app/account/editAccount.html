@@ -1,0 +1,23 @@
+<template name="editAccount">
+    {{> nav title='Edit Profile' black=true back=true}}
+    <div class="grid-block">
+    	<div class="grid-content">
+	        <form class="form-share">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="name" class="" placeholder="Name" value="{{profile.name}}">
+                </div>
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="text" id="website" class="" placeholder="Add model of your custom" value="{{profile.website}}">
+                </div>
+                <div class="form-group">
+                    <label>Bio</label>
+                    <input type="text" id="bio" class="" placeholder="Bio" value="{{profile.bio}}">
+                </div>
+	            <button id="saveData" class="button primary expand mbn" type='submit'>Save
+	            </button>
+	        </form>
+        </div>
+    </div>
+</template>
