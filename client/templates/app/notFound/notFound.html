@@ -1,13 +1,10 @@
 <template name="notFound">
-  <div class="page not-found">
-    {{> nav title='Not Found'}}
+    {{> nav title='Not Found' black=true}}
 
-    <div class="content-scrollable">
-      <div class="wrapper-message">
-        <div class="title-message">Yikes! That wasn't found</div>
-        <div class="subtitle-message">The stuff you were looking for wasn't found. <a href="{{pathFor 'home'}}">Return home</a></div>
+    <div class="grid-block">
+      <div class="grid-content">
+        <h1 class="title-message">Yikes! That wasn't found</h1>
+        <h3 class="subtitle-message">The stuff you were looking for wasn't found. <a href="{{pathFor 'home'}}">Return home</a></h3>
       </div>
-
     </div>
-  </div>
 </template>
