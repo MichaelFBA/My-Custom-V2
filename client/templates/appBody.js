@@ -89,25 +89,25 @@ Template.appBody.rendered = function() {
     }
   };
 
-  this.find(".notifications")._uihooks = {
-    insertElement: function(node, next) {
-      $(node)
-        .insertBefore(next)
-        .velocity("slideDown", { 
-          duration: ANIMATION_DURATION, 
-          easing: [0.175, 0.885, 0.335, 1.05]
-        });
-    },
-    removeElement: function(node) {
-      $(node)
-        .velocity("fadeOut", {
-          duration: ANIMATION_DURATION,
-          complete: function() {
-            $(node).remove();
-          }
-        });
-    }
-  };
+  // this.find(".notifications")._uihooks = {
+  //   insertElement: function(node, next) {
+  //     $(node)
+  //       .insertBefore(next)
+  //       .velocity("slideDown", { 
+  //         duration: ANIMATION_DURATION, 
+  //         easing: [0.175, 0.885, 0.335, 1.05]
+  //       });
+  //   },
+  //   removeElement: function(node) {
+  //     $(node)
+  //       .velocity("fadeOut", {
+  //         duration: ANIMATION_DURATION,
+  //         complete: function() {
+  //           $(node).remove();
+  //         }
+  //       });
+  //   }
+  // };
 }
 
 

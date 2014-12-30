@@ -1,17 +1,13 @@
 <template name="authOverlay">
-  <div class="overlay auth">
+	<div class="overlay auth">
+		<div class="grid-block">
 
-    <div class="row">
-	    <div class="columns small-10 small-centered text-center">
-	    	<img class="mtm" src="img/app/sign-in.svg" alt="Sign in" />
-	    	<h2 class="white strong">Sign in</h2>
-            <p>With Facebook or Twitter.</p>
-	    </div>
-    </div>
-
-    <ul class="button-group even-2 width100 absolute bn">
-	  <li><input type="button" class="button btnFacebook mbn js-facebook-signin" value="Facebook"></li>
-	  <li><input type="button" class="button btnTwitter mbn js-twitter-signin" value="Twitter"></li>
-	</ul>
-  </div>
+			<div class="grid-content">
+				<img class="mtm" src="img/app/sign-in.svg" alt="Sign in" />
+				<h2 class="white strong">Sign in</h2>
+				<a class="expand button js-facebook-signin btnFacebook" value="Facebook" href="#">Facebook</a>
+				<a class="expand button js-twitter-signin btnTwitter" value="Twitter" href="#">Twitter</a>
+			</div>
+		</div>
+	</div>
 </template>

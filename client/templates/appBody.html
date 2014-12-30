@@ -1,11 +1,12 @@
 <template name="appBody">
+    {{> overlay}}
     <div class="off-canvas left {{#if menuOpen}}is-active{{/if}}" position="left">
         <aside id="menu" class="left-off-canvas-menu">
 
           <ul class="vertical menu-bar">
             <!-- <li><a href="/garage/{{currentUser._id}}">Garage</a></li> -->
             <li><a href="{{pathFor 'garage'}}">Garage</a></li>
-            <li><a href="{{pathFor 'garage'}}">Stream</a></li>
+            <li><a href="{{pathFor 'home'}}">Stream</a></li>
             <li><a href="{{pathFor 'about'}}">About</a></li>
             <li><a href="{{pathFor 'search'}}">Search</a></li>
           </ul>
