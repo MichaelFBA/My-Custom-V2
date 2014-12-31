@@ -1,0 +1,15 @@
+<template name="likes">
+    <ul class="">
+    {{#each likes}}
+    <li class="pan">
+        <a class="" href="activities/{{_id}}" style="background-image: url('{{image}}')">
+            <p>activityId: {{activityId}}</p>
+        </a>
+    </li>
+    {{/each}}
+    </ul>
+    {{#if isReady}} {{#if hasMoreLikes}}
+    <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
+    <div class="loading">Loading</div>
+    {{/if}}
+</template>

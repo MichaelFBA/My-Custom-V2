@@ -1,7 +1,7 @@
 <template name="appBody">
     {{> overlay}}
     <div class="off-canvas left {{#if menuOpen}}is-active{{/if}}" position="left">
-        <aside id="menu" class="left-off-canvas-menu">
+        <aside id="menu">
           <ul class="vertical menu-bar">
             <li><a href="/garage/{{currentUser._id}}">Garage</a></li>
             <li><a href="{{pathFor 'home'}}">Stream</a></li>
@@ -13,4 +13,5 @@
     <div id="content-container" class="grid-frame vertical">
         {{> yield}}
     </div>
+    {{initFoundation}}
 </template>
