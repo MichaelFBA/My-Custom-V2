@@ -1,4 +1,5 @@
-.image-profile{width: 60px; height:60px;}
+.image-profile.small{width: 60px; height:60px;}
+.image-profile.large{width: 100%; min-height:400px;}
 .scroll-section{ overflow-x: scroll;-webkit-overflow-scrolling: touch; }
 
 .tabs{
@@ -27,3 +28,5 @@
 	width: 100%;
 	left: 0px;
 }
+
+.tab-contents{width: 100%;}

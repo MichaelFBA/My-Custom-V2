@@ -1,0 +1,13 @@
+<template name="activities">
+    <ul class="small-block-grid-3">
+    {{#each activities}}
+    <li class="pan">
+        <a class="bg-image small block" href="activities/{{_id}}" style="background-image: url('{{image}}')"></a>
+    </li>
+    {{/each}}
+    </ul>
+    {{#if isReady}} {{#if hasMoreActivities}}
+    <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
+    <div class="loading">Loading</div>
+    {{/if}}
+</template>

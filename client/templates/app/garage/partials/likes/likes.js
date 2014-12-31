@@ -1,4 +1,4 @@
-Template.wheels.created = function () {
+Template.likes.created = function () {
 
   // 1. Initialization
   
@@ -6,7 +6,7 @@ Template.wheels.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.limit = new ReactiveVar(5);
+  instance.limit = new ReactiveVar(12);
   instance.ready = new ReactiveVar(false);
   
   // 2. Autorun
@@ -17,14 +17,14 @@ Template.wheels.created = function () {
     // get the limit
     var limit = instance.limit.get();
 
-    console.log("Asking for "+limit+" wheels…")
+    console.log("Asking for "+limit+" likes…")
     
-    // subscribe to the wheels publication
-    var subscription = Meteor.subscribe('wheels', Meteor.userId(), limit);
+    // subscribe to the likes publication
+    var subscription = Meteor.subscribe('likes', Meteor.userId(), limit);
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+limit+" wheels. \n\n")
+      console.log("> Received "+limit+" likes. \n\n")
       instance.loaded.set(limit);
       instance.ready.set(true);
     } else {
@@ -35,36 +35,36 @@ Template.wheels.created = function () {
   
   // 3. Cursor
   
-  instance.wheels = function() { 
-    return Wheels.find({}, {limit: instance.loaded.get()});
+  instance.likes = function() { 
+    return Likes.find({ likedById: Meteor.userId() }, {limit: instance.loaded.get()});
   }
   
 };
 
-Template.wheels.helpers({
-  // the wheels cursor
-  wheels: function () {
-    return Template.instance().wheels();
+Template.likes.helpers({
+  // the likes cursor
+  likes: function () {
+    return Template.instance().likes();
   },
   // the subscription handle
   isReady: function () {
     return Template.instance().ready.get();
   },
-  // are there more wheels to show?
-  hasMoreWheels: function () {
-    return Template.instance().wheels().count() >= Template.instance().limit.get();
+  // are there more likes to show?
+  hasMoreLikes: function () {
+    return Template.instance().likes().count() >= Template.instance().limit.get();
   }
 });
 
-Template.wheels.events({
+Template.likes.events({
   'click .load-more': function (event, instance) {
     event.preventDefault();
     
-    // get current value for limit, i.e. how many wheels are currently displayed
+    // get current value for limit, i.e. how many likes are currently displayed
     var limit = instance.limit.get();
     
     // increase limit by 5 and update it
-    limit += 5;
+    limit += 12;
     instance.limit.set(limit)
   }
 });

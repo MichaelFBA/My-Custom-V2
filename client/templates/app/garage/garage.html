@@ -4,7 +4,7 @@
     <div class="grid-block shrink whiteSmokeBg">
         <div class="grid-block shrink">
             <div class="grid-content p1rem">
-                <div class="image-profile" style="background-image: url('{{profile.picture}}')"></div>
+                <div class="image-profile small" style="background-image: url('{{profile.picture}}')"></div>
             </div>
         </div>
         <div class="grid-block">
@@ -38,8 +38,8 @@
     </div>
     
     <div class="grid-block">
-        <div class="tab-contents">
-            <div class="tab-content {{#if isActiveTab 'Info'}}is-active{{/if}}" tab="tab">
+        <div class="tab-contents pan">
+            <div class="tab-content p1rem {{#if isActiveTab 'Info'}}is-active{{/if}}" tab="tab">
                 {{#if profile.bio}}
                 <p class="mbn">{{profile.bio}}</p>
                 {{/if}} 
@@ -51,16 +51,17 @@
                 {{> wheels}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Posts'}}is-active{{/if}}" tab="tab">
-                {{> s3_upload}}
+                {{> activities}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Likes'}}is-active{{/if}}" tab="tab">
-                likes
+                {{> s3_upload}}
+                {{> likes}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Followers'}}is-active{{/if}}" tab="tab">
-                followers
+                {{> followers}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Following'}}is-active{{/if}}" tab="tab">
-                following
+                {{> following}}
             </div>
         </div>
     </div>

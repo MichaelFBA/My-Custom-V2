@@ -1,32 +1,21 @@
 <template name="wheels">
-	<section class="block-list">
-	<ul>
-    {{#each wheels}}
-    {{debug}}
-    
-	<li>
-		<a href="wheels/{{_id}}">
-			<div class="grid-block shrink">
-        <div class="grid-block shrink">
-            <div class="image-profile" style="background-image: url('{{image}}')"></div>
-        </div>
-        <div class="grid-block">
-            <div class="grid-content">
-                <p class="mbn avenirBlack">{{make}} {{model}}</p>
-                <p class="mbn">{{place}}</p>
-            </div>
-        </div>
-    </div>
-		</a>
-	</li>
-	
-    
 
+    {{#each wheels}}
+    <a href="wheels/{{_id}}">
+			<div class="grid-block shrink">
+                <div class="image-profile large" style="background-image: url('{{image}}')"></div>
+
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <h2 class="mbn">{{make}} {{model}}</h2>
+                </div>
+            </div>
+		</a>
     {{/each}}
-    </ul>
-	</section>
+
     {{#if isReady}} {{#if hasMoreWheels}}
-    <a class="load-more" href="#">Load More</a> {{/if}} {{else}}
+    <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
     <div class="loading">Loading</div>
     {{/if}}
 </template>
