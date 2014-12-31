@@ -48,10 +48,10 @@
                 {{/if}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Customs'}}is-active{{/if}}" tab="tab">
-                customs
+                {{> wheels}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Posts'}}is-active{{/if}}" tab="tab">
-                posts
+                {{> s3_upload}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Likes'}}is-active{{/if}}" tab="tab">
                 likes
@@ -121,3 +121,4 @@
     </div> -->
 
 </template>
+
