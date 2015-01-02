@@ -1,9 +1,11 @@
 <template name="likes">
     <ul class="">
     {{#each likes}}
+    
     <li class="pan">
-        <a class="" href="activities/{{_id}}" style="background-image: url('{{image}}')">
-            <p>activityId: {{activityId}}</p>
+        {{debug}}
+        <a class="" href="activities/{{_id}}" style="background-image: url('{{getActivityImage activityId}}')">
+            <p>place: {{place}}</p>
         </a>
     </li>
     {{/each}}

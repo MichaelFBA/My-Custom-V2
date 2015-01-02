@@ -24,8 +24,23 @@ Meteor.publish('following', function(id, limit) {
 
 // Publish Likes
 Meteor.publish('likes', function(id, limit) {
+
   Meteor._sleepForMs(1000);
-  return Likes.find({likedById: id}, {limit: limit});
+
+  var likesCursor = Likes.find({likedById: id}, {limit: limit});
+  var ids = likesCursor.map(function(p) { return p.activityId });
+  console.log(ids)
+  // return Activities.find({ _id: { $in: ids } }, {limit: limit});
+  return [
+  	Likes.find({likedById: id}, {limit: limit}),
+  	Activities.find({ _id: { $in: ids } }, {limit: limit})
+  ]
+
 });
 
+
+// var likesCursor = Followers.find({likedById: id}, {limit: limit});
+// var usersIds = likesCursor.map(function(p) { return p.userId });
+// usersIds.push(this.userId);
+// return Activities.find({ userId: { $in: usersIds } },{sort: {date: -1}, limit: 100 } );
 
