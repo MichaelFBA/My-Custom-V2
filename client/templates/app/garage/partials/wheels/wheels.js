@@ -20,7 +20,7 @@ Template.wheels.created = function () {
     console.log("Asking for "+limit+" wheels…")
     
     // subscribe to the wheels publication
-    var subscription = Meteor.subscribe('wheels', Meteor.userId(), limit);
+    var subscription = Meteor.subscribe('wheels', Router.current().params['_id'], limit);
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {

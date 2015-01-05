@@ -20,7 +20,7 @@ Template.likes.created = function () {
     console.log("Asking for "+limit+" likes…")
     
     // subscribe to the likes publication
-    var subscription = Meteor.subscribe('likes', Meteor.userId(), limit);
+    var subscription = Meteor.subscribe('likes', Router.current().params['_id'], limit);
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {

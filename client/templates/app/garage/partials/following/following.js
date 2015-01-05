@@ -20,7 +20,7 @@ Template.following.created = function () {
     console.log("Asking for "+limit+" following…")
     
     // subscribe to the following publication
-    var subscription = Meteor.subscribe('following', limit);
+    var subscription = Meteor.subscribe('following',Router.current().params['_id'], limit);
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {

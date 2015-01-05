@@ -11,23 +11,23 @@ Meteor.publish('activities', function(id, limit) {
 });
 
 // Publish Followers
-Meteor.publish('followers', function(limit) {
+Meteor.publish('followers', function(id, limit) {
   Meteor._sleepForMs(1000);
-  var followersCursor = Followers.find({userId: this.userId }, {limit: limit});
+  var followersCursor = Followers.find({userId: id }, {limit: limit});
   var ids = followersCursor.map(function(p) { return p.followerId });
   return [
-  	Followers.find({userId: this.userId }, {limit: limit}),
+  	Followers.find({userId: id }, {limit: limit}),
   	Meteor.users.find({ _id: { $in: ids } }, {limit: limit})
   ]
 });
 
 // Publish Following
-Meteor.publish('following', function(limit) {
+Meteor.publish('following', function(id, limit) {
   Meteor._sleepForMs(1000);
-  var followersCursor = Followers.find({followerId: this.userId}, {limit: limit});
+  var followersCursor = Followers.find({followerId: id}, {limit: limit});
   var ids = followersCursor.map(function(p) { return p.userId });
   return [
-    Followers.find({followerId: this.userId }, {limit: limit}),
+    Followers.find({followerId: id }, {limit: limit}),
     Meteor.users.find({ _id: { $in: ids } }, {limit: limit})
   ]
 });

@@ -20,7 +20,7 @@ Template.activities.created = function () {
     console.log("Asking for "+limit+" activities…")
     
     // subscribe to the activities publication
-    var subscription = Meteor.subscribe('activities', Meteor.userId(), limit);
+    var subscription = Meteor.subscribe('activities', Router.current().params['_id'], limit);
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {

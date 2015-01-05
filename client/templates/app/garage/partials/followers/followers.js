@@ -20,7 +20,7 @@ Template.followers.created = function () {
     console.log("Asking for "+limit+" followers…")
     
     // subscribe to the followers publication
-    var subscription = Meteor.subscribe('followers', limit);
+    var subscription = Meteor.subscribe('followers', Router.current().params['_id'], limit);
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
