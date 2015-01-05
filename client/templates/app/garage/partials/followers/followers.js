@@ -53,15 +53,12 @@ Template.followers.helpers({
   // are there more followers to show?
   hasMoreFollowers: function () {
     return Template.instance().followers().count() >= Template.instance().limit.get();
-<<<<<<< HEAD
   },
   getUserImage: function(id){
     return Meteor.users.findOne(id).profile.picture;
   },
   getUserName: function(id){
     return Meteor.users.findOne(id).profile.name;
-=======
->>>>>>> FETCH_HEAD
   }
 });
 

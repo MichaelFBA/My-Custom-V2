@@ -9,6 +9,7 @@ Template.editAccount.events({
 		Meteor.call('updateUser', userData, function(error,result){
 			if(error) console.error(error)
 			console.log(result)
+			history.back();
 		});
 	}
 });
