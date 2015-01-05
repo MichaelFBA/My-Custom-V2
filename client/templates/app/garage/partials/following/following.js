@@ -20,7 +20,11 @@ Template.following.created = function () {
     console.log("Asking for "+limit+" following…")
     
     // subscribe to the following publication
+<<<<<<< HEAD
     var subscription = Meteor.subscribe('following', limit);
+=======
+    var subscription = Meteor.subscribe('following', Meteor.userId(), limit);
+>>>>>>> FETCH_HEAD
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
@@ -53,12 +57,15 @@ Template.following.helpers({
   // are there more following to show?
   hasMoreFollowing: function () {
     return Template.instance().following().count() >= Template.instance().limit.get();
+<<<<<<< HEAD
   },
   getUserImage: function(id){
     return Meteor.users.findOne(id).profile.picture;
   },
   getUserName: function(id){
     return Meteor.users.findOne(id).profile.name;
+=======
+>>>>>>> FETCH_HEAD
   }
 });
 

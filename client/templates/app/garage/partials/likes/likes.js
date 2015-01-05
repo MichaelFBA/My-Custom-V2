@@ -6,7 +6,11 @@ Template.likes.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
+<<<<<<< HEAD
   instance.limit = new ReactiveVar(20);
+=======
+  instance.limit = new ReactiveVar(12);
+>>>>>>> FETCH_HEAD
   instance.ready = new ReactiveVar(false);
   
   // 2. Autorun
@@ -53,6 +57,7 @@ Template.likes.helpers({
   // are there more likes to show?
   hasMoreLikes: function () {
     return Template.instance().likes().count() >= Template.instance().limit.get();
+<<<<<<< HEAD
   },
   //getActivity Image
   getActivityImage: function(id){
@@ -60,6 +65,8 @@ Template.likes.helpers({
   },
   getActivityId: function(id){
     return Activities.findOne(id)._id;
+=======
+>>>>>>> FETCH_HEAD
   }
 });
 
@@ -70,8 +77,13 @@ Template.likes.events({
     // get current value for limit, i.e. how many likes are currently displayed
     var limit = instance.limit.get();
     
+<<<<<<< HEAD
     // increase limit by 20 and update it
     limit += 20;
+=======
+    // increase limit by 5 and update it
+    limit += 12;
+>>>>>>> FETCH_HEAD
     instance.limit.set(limit)
   }
 });

@@ -1,4 +1,5 @@
 <template name="following">
+<<<<<<< HEAD
     <section class="block-list with-icons man">
         <ul>
         {{#each following}}
@@ -9,6 +10,18 @@
         {{/each}}
         </ul>
     </section>
+=======
+    <ul class="small-block-grid-3">
+    {{#each following}}
+    {{debug}}
+    <li class="pan">
+        <a class="" href="garage/{{_id}}" style="background-image: url('{{image}}')">
+            <p>UserID: {{userId}}</p>
+        </a>
+    </li>
+    {{/each}}
+    </ul>
+>>>>>>> FETCH_HEAD
     {{#if isReady}} {{#if hasMoreFollowing}}
     <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
     <div class="loading">Loading</div>

@@ -11,6 +11,7 @@ Meteor.publish('activities', function(id, limit) {
 });
 
 // Publish Followers
+<<<<<<< HEAD
 Meteor.publish('followers', function(limit) {
   Meteor._sleepForMs(1000);
   var followersCursor = Followers.find({userId: this.userId }, {limit: limit});
@@ -33,11 +34,23 @@ Meteor.publish('following', function(limit) {
     Followers.find({followerId: this.userId }, {limit: limit}),
     Meteor.users.find({ _id: { $in: ids } }, {limit: limit})
   ]
+=======
+Meteor.publish('followers', function(id, limit) {
+  Meteor._sleepForMs(1000);
+  return Followers.find({userId: id }, {limit: limit});
+});
+
+// Publish Following
+Meteor.publish('following', function(id, limit) {
+  Meteor._sleepForMs(1000);
+  return Followers.find({followerId: id}, {limit: limit});
+>>>>>>> FETCH_HEAD
 });
 
 // Publish Likes
 Meteor.publish('likes', function(id, limit) {
   Meteor._sleepForMs(1000);
+<<<<<<< HEAD
   var likesCursor = Likes.find({likedById: id}, {limit: limit});
   var ids = likesCursor.map(function(p) { return p.activityId });
   return [
@@ -57,3 +70,9 @@ Meteor.publish('getActivity', function(id) {
   return Activities.find({_id: id});
 });
 
+=======
+  return Likes.find({likedById: id}, {limit: limit});
+});
+
+
+>>>>>>> FETCH_HEAD
