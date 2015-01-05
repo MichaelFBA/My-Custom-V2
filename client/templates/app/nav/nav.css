@@ -1,0 +1,7 @@
+#menu .menu-bar li{
+	border-bottom: 1px solid #d0d0d0;
+}
+.off-canvas.left{
+	box-shadow: none;
+	border-right: 1px solid #d0d0d0;
+}

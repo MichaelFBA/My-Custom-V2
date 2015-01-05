@@ -1,15 +1,14 @@
 <template name="likes">
-    <ul class="">
+    <section class="block-list with-icons man">
+    <ul>
     {{#each likes}}
-    
-    <li class="pan">
-        {{debug}}
-        <a class="" href="activities/{{_id}}" style="background-image: url('{{getActivityImage activityId}}')">
-            <p>place: {{place}}</p>
-        </a>
-    </li>
+        <li>
+            <img src="{{getActivityImage activityId}}" alt="">
+            <a href="../activity/{{getActivityId activityId}}">{{getActivityId activityId}}</a>
+        </li>
     {{/each}}
     </ul>
+    </section>
     {{#if isReady}} {{#if hasMoreLikes}}
     <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
     <div class="loading">Loading</div>

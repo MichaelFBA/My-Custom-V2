@@ -1,14 +1,14 @@
 <template name="following">
-    <ul class="small-block-grid-3">
-    {{#each following}}
-    {{debug}}
-    <li class="pan">
-        <a class="" href="garage/{{_id}}" style="background-image: url('{{image}}')">
-            <p>UserID: {{userId}}</p>
-        </a>
-    </li>
-    {{/each}}
-    </ul>
+    <section class="block-list with-icons man">
+        <ul>
+        {{#each following}}
+            <li>
+                <img src="{{getUserImage userId}}" alt="">
+                <a href="../garage/{{userId}}">{{getUserName userId}}</a>
+            </li>
+        {{/each}}
+        </ul>
+    </section>
     {{#if isReady}} {{#if hasMoreFollowing}}
     <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
     <div class="loading">Loading</div>

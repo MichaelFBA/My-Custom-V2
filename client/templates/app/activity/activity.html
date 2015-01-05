@@ -1,0 +1,15 @@
+<template name="activity">
+	{{> nav title='About' black=true back=true}}
+	<div class="grid-block vertical">
+		<img src="{{image}}">
+		<!-- <img src="//wit.wurfl.io/h_500/m_cropbox/{{image}}"> -->
+		<div class="grid-block shrink">
+			<div class="grid-content">
+				<h3 class="mts mbn">{{description}}</h3>
+				{{#if place}}
+	                <small class="subheader">&mdash;{{place}}</small>
+	            {{/if}}
+			</div>
+		</div>
+	</div>
+</template>

@@ -57,6 +57,9 @@ Template.likes.helpers({
   //getActivity Image
   getActivityImage: function(id){
     return Activities.findOne(id).image;
+  },
+  getActivityId: function(id){
+    return Activities.findOne(id)._id;
   }
 });
 

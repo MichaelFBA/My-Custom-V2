@@ -1,13 +1,15 @@
 <template name="followers">
-    <ul class="small-block-grid-3">
-    {{#each followers}}
-    <li class="pan">
-        <a class="" href="garage/{{_id}}" style="background-image: url('{{image}}')">
-            <p>UserID: {{userId}}</p>
-        </a>
-    </li>
-    {{/each}}
-    </ul>
+    <section class="block-list with-icons man">
+        <ul>
+        {{#each followers}}
+        {{debug}}
+            <li>
+                <img src="{{getUserImage followerId}}" alt="">
+                <a href="../garage/{{followerId}}">{{getUserName followerId}}</a>
+            </li>
+        {{/each}}
+        </ul>
+    </section>
     {{#if isReady}} {{#if hasMoreFollowers}}
     <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
     <div class="loading">Loading</div>
