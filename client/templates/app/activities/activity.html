@@ -1,0 +1,45 @@
+<template name="activity">
+    <section class="block-list">
+        <ul>
+            {{#each activity}}
+            <li>
+                <div class="card">
+                    <img src="{{image}}">
+                    <div class="card-divider">
+                        This is a header
+                    </div>
+                    <div class="card-section">
+                        <div class="small-12 columns">
+                            <p class="mbn">{{description}}</p>
+                            {{#if place}}
+                                <small class="subheader">&mdash;{{place}}</small>
+                            {{/if}}
+                        </div>
+
+                        <div class="small-12 columns mbm">
+                            {{#if isliked}}
+                                <a id="unlike"><i class="fa fa-2x fa-thumbs-up mrs"></i> </a>
+                            {{else}}
+                                <a id="like"><i class="fa fa-2x fa-thumbs-o-up mrs"></i></a>
+                            {{/if}}
+                            {{#if likeCount}} <strong>{{likeCount}}</strong> {{/if}}
+<!--                             {{#if commentCount _id}}
+                                <a class="mhs" href="/comments/{{_id}}"><i class="fa fa-2x fa-comments"></i></a>
+                            {{else}}
+                                <a class="mhs" href="/comments/{{_id}}"><i class="fa fa-2x fa-comment-o"></i></a>
+                            {{/if}}
+                            {{#if commentCount _id}} <strong>{{commentCount}}</strong> {{/if}} -->
+                        </div>
+
+
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </section>
+    {{#if isReady}} {{#if hasMoreActivity}}
+    <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
+    <div class="loading">Loading</div>
+    {{/if}}
+</template>

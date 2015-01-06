@@ -1,4 +1,22 @@
 //--------------------------------------------------------------------------
+// Home Page
+//--------------------------------------------------------------------------
+Meteor.publish('latestActivity', function(id, limit) {
+  Meteor._sleepForMs(1000);
+  //Get Followers IDs
+  var followersCursor = Followers.find({followerId: id}, {limit: limit});
+  var ids = followersCursor.map(function(p) { return p.userId });
+  //Get Activity Ids
+  var ActivitiesCursor = Activities.find({ userId: { $in: ids } }, {limit: limit})
+  var activityIds = ActivitiesCursor.map(function(p) { return p._id });
+  return [
+    // Followers.find({followerId: id }, {limit: limit}),
+    Activities.find({ userId: { $in: ids } }, {limit: limit}),
+    Likes.find({ activityId: { $in: activityIds } }, {limit: limit})
+  ]
+});
+
+//--------------------------------------------------------------------------
 // Garage Page
 //--------------------------------------------------------------------------
 Meteor.publish('getGarage', function(id) {

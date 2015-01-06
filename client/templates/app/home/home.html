@@ -9,27 +9,7 @@
             </h1>
             </div>
 
-            <section class="block-list">
-                <ul>
-                <li>
-                    <h5>News</h5>
-                    <p>{{latestNews.text}}</p>
-                </li>
-                {{#each activities}} 
-                    {{> activity}} 
-                    <li>
-                        <h5>This is a message</h5>
-                        <p>It's a pretty long message, but thats chill, we totes like to read now a days.</p>
-                    </li>
-                {{else}}
-                    <li>
-                        <h5>You havent started following anyone yet</h5>
-                        <p>Follow your friends and fellow enthusiasts</p>
-                    </li>
-                {{/each}}
-                </ul>
-            </section>
-
+            {{> activity}} 
         </div>
     </div>
 </template>
