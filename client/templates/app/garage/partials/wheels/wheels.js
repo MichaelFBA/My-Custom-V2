@@ -1,4 +1,4 @@
-Template.wheels.created = function () {
+Template.wheels_partial.created = function () {
 
   // 1. Initialization
   
@@ -41,7 +41,7 @@ Template.wheels.created = function () {
   
 };
 
-Template.wheels.helpers({
+Template.wheels_partial.helpers({
   // the wheels cursor
   wheels: function () {
     return Template.instance().wheels();
@@ -56,7 +56,7 @@ Template.wheels.helpers({
   }
 });
 
-Template.wheels.events({
+Template.wheels_partial.events({
   'click .load-more': function (event, instance) {
     event.preventDefault();
     

@@ -1,3 +1,10 @@
+//--------------------------------------------------------------------------
+// Garage Page
+//--------------------------------------------------------------------------
+Meteor.publish('getGarage', function(id) {
+  return Meteor.users.find({_id: id});
+});
+
 // Publish Wheels
 Meteor.publish('wheels', function(id, limit) {
   Meteor._sleepForMs(1000);
@@ -42,7 +49,20 @@ Meteor.publish('likes', function(id, limit) {
   ]
 });
 
-//Get Activities
+//--------------------------------------------------------------------------
+// Activities Page
+//--------------------------------------------------------------------------
+
 Meteor.publish('getActivity', function(id) {
   return Activities.find({_id: id});
 });
+
+//--------------------------------------------------------------------------
+// Wheels Page
+//--------------------------------------------------------------------------
+
+Meteor.publish('getWheels', function(id) {
+  return Wheels.find({_id: id});
+});
+
+

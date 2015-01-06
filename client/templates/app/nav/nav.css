@@ -5,3 +5,7 @@
 	box-shadow: none;
 	border-right: 1px solid #d0d0d0;
 }
+
+.title-bar, .title-bar.dark{
+	border-bottom:none;
+}
