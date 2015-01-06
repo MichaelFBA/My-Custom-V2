@@ -23,12 +23,13 @@
                                 <a id="like"><i class="fa fa-2x fa-thumbs-o-up mrs"></i></a>
                             {{/if}}
                             {{#if likeCount}} <strong>{{likeCount}}</strong> {{/if}}
-<!--                             {{#if commentCount _id}}
+
+                            {{#if hasCommented}}
                                 <a class="mhs" href="/comments/{{_id}}"><i class="fa fa-2x fa-comments"></i></a>
                             {{else}}
                                 <a class="mhs" href="/comments/{{_id}}"><i class="fa fa-2x fa-comment-o"></i></a>
                             {{/if}}
-                            {{#if commentCount _id}} <strong>{{commentCount}}</strong> {{/if}} -->
+                            {{#if commentCount}} <strong>{{commentCount}}</strong>{{/if}}
                         </div>
 
 

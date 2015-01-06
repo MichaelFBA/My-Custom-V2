@@ -1,0 +1,27 @@
+<template name="comments">
+    {{> nav title='Comments' black=true back=true}}
+    <div class="grid-block">
+        <div class="grid-content">
+            {{#each this}}
+            <div class="row mvm">
+                <div class="small-2 columns pln">
+                    <img src="{{userAvatar}}" class="img-responsive">
+                </div>
+                <div class="small-10 columns pln prt">
+                    <p class="mbn"><span class="strong">{{userName}}</span> {{text}}</p>
+                    <small class="inlineBlock man pan subheader"><i class="fa fa-clock-o"></i> {{formatTime date}}</small>
+                </div>
+            </div>
+            {{/each}}
+            <div class="row collapse comments-bottom">
+                <div class="small-10 columns">
+                    <input type="text" id="comment" class="mbn" placeholder="Enter comment here...">
+                </div>
+                <div class="small-2 columns">
+                    <a href="#" id="submitComment" class="button postfix mbn">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>

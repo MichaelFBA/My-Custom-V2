@@ -12,7 +12,8 @@ Meteor.publish('latestActivity', function(id, limit) {
   return [
     // Followers.find({followerId: id }, {limit: limit}),
     Activities.find({ userId: { $in: ids } }, {limit: limit}),
-    Likes.find({ activityId: { $in: activityIds } }, {limit: limit})
+    Likes.find({ activityId: { $in: activityIds } }, {limit: limit}),
+    Comments.find({ discussion_id: { $in: activityIds } }, {limit: limit}),
   ]
 });
 
@@ -83,4 +84,12 @@ Meteor.publish('getWheels', function(id) {
   return Wheels.find({_id: id});
 });
 
+//--------------------------------------------------------------------------
+// Comments
+//--------------------------------------------------------------------------
+
+
+Meteor.publish('getComments', function(id) {
+  return Comments.find({discussion_id: id}, {sort: {date: -1}, limit: 100});
+});
 

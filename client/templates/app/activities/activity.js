@@ -67,6 +67,14 @@ Template.activity.helpers({
 
   isliked : function(){
 	return Likes.find({activityId: this._id, likedById: Meteor.userId()  }).fetch();
+  },
+
+  commentCount:function(){
+	return Comments.find({discussion_id : this._id}).count();
+  },
+
+  hasCommented : function(){
+	return Comments.find({discussion_id: this._id, userId: Meteor.userId()  }).fetch();
   }
 
 });
