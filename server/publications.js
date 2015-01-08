@@ -88,8 +88,17 @@ Meteor.publish('getWheels', function(id) {
 // Comments
 //--------------------------------------------------------------------------
 
-
 Meteor.publish('getComments', function(id) {
   return Comments.find({discussion_id: id}, {sort: {date: -1}, limit: 100});
+});
+
+//--------------------------------------------------------------------------
+// Notifications
+//--------------------------------------------------------------------------
+
+Meteor.publish('commonUserData', function(id) {
+  return [
+    Notifications.find({recipientId: this.userId}, {sort: {date: -1}, limit: 100})
+  ];
 });
 
