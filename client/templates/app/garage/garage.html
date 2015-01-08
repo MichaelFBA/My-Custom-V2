@@ -1,6 +1,8 @@
 <template name="garage">
     {{#nav title=profile.name black=true}} {{#if notificationCount}}
-    <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><span class="round alert label mts mrs">{{notificationCount}}</span></a> {{/if}} {{/nav}}
+    <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><span class="round alert label mts mrs">{{notificationCount}}</span></a> 
+    {{/if}} 
+    {{/nav}}
     <div class="grid-block shrink whiteSmokeBg">
         <div class="grid-block shrink">
             <div class="grid-content p1rem">
