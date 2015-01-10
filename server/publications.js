@@ -98,7 +98,9 @@ Meteor.publish('getComments', function(id) {
 
 Meteor.publish('commonUserData', function(id) {
   return [
-    Notifications.find({recipientId: this.userId}, {sort: {date: -1}, limit: 100})
+    Notifications.find({recipientId: this.userId}, {sort: {date: -1}, limit: 100}),
+    Meteor.users.find({ _id: this.userId}, {fields: {'services':1}} )
+
   ];
 });
 

@@ -14,8 +14,12 @@ Template.comments.events({
             }
         })
 
+        //Make unique array so not duplicate users
+        var uniqueList = _.uniq(self, function(item, key, a) { 
+            return item.userId;
+        });
         //Add notification to all recipients who commented
-        _.each(self, function(value, key, list){
+        _.each(uniqueList, function(value, key, list){
         
             var notification = {
                 recipientId : value.userId,

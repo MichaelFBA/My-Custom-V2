@@ -55,10 +55,10 @@ Template.followers.helpers({
     return Template.instance().followers().count() >= Template.instance().limit.get();
   },
   getUserImage: function(id){
-    return Meteor.users.findOne(id).profile.picture;
+    return Meteor.user() && Meteor.users.findOne(id).profile.picture;
   },
   getUserName: function(id){
-    return Meteor.users.findOne(id).profile.name;
+    return Meteor.user() && Meteor.users.findOne(id).profile.name;
   }
 });
 

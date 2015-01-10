@@ -4,6 +4,7 @@
 
 /*  Colors */
 .white{ color: #ffffff;}
+.primaryColor{color:#FFCD03;}
 .whiteSmokeBg{ background-color: #F5F5F5;}
 .blackBg{ background-color: #000000;}
 .btnTwitter { background-color: #46c8f5 !important;}
@@ -32,4 +33,11 @@
     display: block;
     height: 8em;
     width: 100%;
+}
+
+.fullWidth {
+   width: 100% !important;
+   margin-left: auto !important;
+   margin-right: auto !important;
+   max-width: initial !important;
 }

@@ -1,27 +1,31 @@
 <template name="comments">
     {{> nav title='Comments' black=true back=true}}
     <div class="grid-block">
-        <div class="grid-content">
+        <section class="block-list with-icons man">
+            <ul>
             {{#each this}}
-            <div class="row mvm">
-                <div class="small-2 columns pln">
-                    <img src="{{userAvatar}}" class="img-responsive">
-                </div>
-                <div class="small-10 columns pln prt">
-                    <p class="mbn"><span class="strong">{{userName}}</span> {{text}}</p>
-                    <small class="inlineBlock man pan subheader"><i class="fa fa-clock-o"></i> {{formatTime date}}</small>
-                </div>
-            </div>
+                <li>
+                    <img src="{{userAvatar}}" alt="">
+                        <span>
+                        <span class="avenirBlack">{{userName}}</span>
+                        <small class="inlineBlock man pan subheader right"><i class="fa fa-clock-o"></i> {{formatTime date}}</small>
+                        {{text}}
+                        </span>
+
+                </li>
             {{/each}}
-            <div class="row collapse comments-bottom">
-                <div class="small-10 columns">
-                    <input type="text" id="comment" class="mbn" placeholder="Enter comment here...">
-                </div>
-                <div class="small-2 columns">
-                    <a href="#" id="submitComment" class="button postfix mbn">Go</a>
-                </div>
-            </div>
+            </ul>
+        </section>
+    </div>
+
+    <div class="grid-block shrink">
+        <div class="grid-content pan">
+            <span class="inline-label man">
+                <input id="comment" class="man" type="text" placeholder="Enter comment here...">
+             <a href="#" class="button" id="submitComment">Comment</a>
+            </span>
         </div>
     </div>
+
 
 </template>

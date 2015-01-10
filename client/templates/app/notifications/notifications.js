@@ -1,6 +1,9 @@
 Template.notifications.events({
-	'click .alert-box': function (event) {
+	'click .note': function (event) {
 		Notifications.update({_id:this._id}, { $set: { isRead : true  } })
+	},
+	'click .markAsRead': function(){
+		Meteor.call('markAllAsRead');
 	}
 });
 

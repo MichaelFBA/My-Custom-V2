@@ -6,11 +6,26 @@
             <section class="block-list">
                 <header>Your Settings</header>
                 <ul>
+                    <li class="with-chevron"><a href="#" id="logout">Logout</a></li>
                     <li>
                         <span>Push Notifications</span>
                         <div class="switch">
-                            <input type="checkbox" id="setting1" checked="checked">
-                            <label for="setting1"></label>
+                            <input type="checkbox" id="pushNotifications" checked="{{hasPush}}">
+                            <label for="pushNotifications" class="man" id="pushLabel"></label>
+                        </div>
+                    </li>
+                    <li>
+                        <span>Connect Facebook</span>
+                        <div class="switch">
+                            <input type="checkbox" id="connectFB" checked="{{hasFB}}">
+                            <label for="connectFB" class="man" id="pushFB"></label>
+                        </div>
+                    </li>
+                    <li>
+                        <span>Connect Twitter</span>
+                        <div class="switch">
+                            <input type="checkbox" id="connectTW" checked="{{hasTW}}">
+                            <label for="connectTW" class="man" id="pushFB"></label>
                         </div>
                     </li>
                 </ul>
