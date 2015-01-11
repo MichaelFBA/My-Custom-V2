@@ -1,0 +1,79 @@
+<template name="activityOverlay">
+    {{#if currentUser}}
+    <div class="overlay activity">
+
+        {{#nav title='Add photo' black=true}}
+            <a href="#" class="js-close-overlay">
+                <i class="fa fa-times"></i>
+            </a>
+        {{/nav}}
+
+<!--         {{#unless attachedImage}}
+
+        <div class="grid-block">
+            <div class="grid-content text-center">
+                
+                <img class="mtm image75" src="../img/app/snake-head.svg" alt="Snake" />
+                <h2 class="white avenirBlack mbn tight">Whats new</h2>
+                <p>Share your latest custom addition.</p>
+            </div>
+        </div>
+        <div class="grid-block shrink text-center">
+            <div class="grid-block">
+                <div class="grid-content">
+                    <a class="js-attach-image block mbs">
+                        <span class="fa fa-camera fa-3x"></span>
+                    </a>
+                    <p class="subtext-camera">Take picture</p>
+                </div>
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <a class="js-camera-roll block mbs">
+                        <i class="fa fa-picture-o fa-3x"></i>
+                    </a>
+                    <p class="subtext-camera">Add from gallery</p>
+                </div>
+            </div>
+        </div>
+        {{else}}  -->
+        <div class="grid-block whiteBg">
+            <div class="grid-content">
+            <div class="image-profile" style="background-image: url('{{attachedImage}}')"></div>
+
+            <form class="form-share">
+                <div class="grid-block">
+                    <div class="small-12 medium-6 grid-content">
+                        <label>What do you want to do?</label>
+                        <select name="" id="makeChoice">
+                            <option value="addNewMedia">Add a photo</option>
+                            <option value="addCustom">Create a custom</option>
+                            <option value="addToExisting">Add to existing custom</option>
+                        </select>
+                    </div>
+
+                    {{> customChoice}}
+
+                    <div class="small-12 medium-6 grid-content">
+                        <label>Share on social media</label>
+                        <input id="connectFB" type="checkbox" checked="{{currentUser.services.facebook}}">
+                        <label for="connectFB">Facebook</label>
+                        <input id="connectTW" type="checkbox" checked="{{currentUser.services.twitter}}">
+                        <label for="connectTW">Twitter</label>
+                    </div>
+
+                    <div class="small-12 medium-6 grid-content">
+                        <button type='submit' class="button primary expand">Share</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+
+        </div>
+
+
+        <!-- {{/unless}} -->
+
+    </div>
+    {{else}} {{> authOverlay}} {{/if}}
+</template>

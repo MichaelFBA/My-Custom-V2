@@ -1,6 +1,6 @@
 var TEMPLATE_KEY = 'overlayTemplate';
 var DATA_KEY = 'overlayData';
-var ANIMATION_DURATION = 200;
+var ANIMATION_DURATION = 300;
 
 Session.setDefault(TEMPLATE_KEY, null);
 

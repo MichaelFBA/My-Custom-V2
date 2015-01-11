@@ -1,0 +1,34 @@
+<template name="addCustom">
+    <div class="small-12 medium-6 grid-content">
+        <label>Type</label>
+        <select id="type" class="">
+            {{#each getType}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="small-12 medium-6 grid-content">
+        <label>Make</label>
+        <select id="make" class="mbn">
+            {{#each getMake}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+        <label class="mbm">Missing your custom make? <a href="mailto:info@my-custom.com">Let us know</a></label>
+    </div>
+    <div class="small-12 medium-6 grid-content">
+        <label>Model</label>
+        <input type="text" id="model" class="" placeholder="Add model of your custom">
+    </div>
+    <div class="small-12 medium-6 grid-content">
+        <label>Year</label>
+        <input type="text" id="year" placeholder="When was it built">
+    </div>
+
+    <div class="small-12 medium-6 grid-content">
+        <label>
+            Add a description...
+            <textarea id="description" rows="4" placeholder="Describe your custom. It can be the backstory of where you purchased and how it was built. Which parts were modified and by who?"></textarea>
+        </label>
+    </div>
+</template>

@@ -174,6 +174,7 @@ Template.appBody.events({
     }
   },
   'click .js-attach-quick-image': function() {
+      console.log('activity overlay app body')
       Overlay.open('activityOverlay', this);
-  },
+  }
 });

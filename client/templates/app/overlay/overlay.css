@@ -9,3 +9,10 @@
   left: 0;
   z-index: 100;
 }
+
+.overlay-back { left: 0; }
+.overlay-dismiss { 
+	right: 15px;
+	position: absolute;
+	top: 15px; 
+}

@@ -1,0 +1,18 @@
+<template name="addToExisting">
+
+	<div class="small-12 medium-6 grid-content">
+        <label>Select custom</label>
+        <select id="related" class="">
+			{{#each getWheels}}
+			<option value="{{_id}}"><img src="{{image}}" />{{make}} {{model}}</option>
+			{{/each}}
+		</select>
+    </div>
+
+    <div class="small-12 medium-6 grid-content">
+        <label>
+            Add a short description...
+            <textarea id="description" rows="4" placeholder="Write a caption..."></textarea>
+        </label>
+    </div>
+</template>
