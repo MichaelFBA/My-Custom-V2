@@ -6,3 +6,5 @@ private/PushChatCert.pem
 private/PushChatKey.pem
 
 server/amazon.js
+
+settings.json

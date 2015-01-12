@@ -5,6 +5,8 @@ Template.activityOverlay.created = function() {
   Session.set(TWEETING_KEY, false);
   Session.set(IMAGE_KEY, null);
 
+  Meteor.subscribe('wheels', Meteor.userId(), 1000);
+
   // 1. Initialization
   var instance = this;
   // initialize the reactive variables
@@ -13,7 +15,7 @@ Template.activityOverlay.created = function() {
 
 Template.activityOverlay.helpers({
   attachedImage: function() {
-	return Session.get(IMAGE_KEY);
+	return "data:image/jpeg;base64," + Session.get(IMAGE_KEY);
   },
   
   avatar: function() {
@@ -49,7 +51,7 @@ Template.activityOverlay.events({
 		    });
 
 		function onSuccess(data) {
-		    Session.set(IMAGE_KEY, "data:image/jpeg;base64," + data);
+		    Session.set(IMAGE_KEY, data);
 		}
 
 		function onFail(message) {
@@ -65,7 +67,7 @@ Template.activityOverlay.events({
 			});
 
 		function onSuccess(data) {
-		    Session.set(IMAGE_KEY, "data:image/jpeg;base64," + data);
+		    Session.set(IMAGE_KEY, data);
 		}
 
 		function onFail(message) {
@@ -86,37 +88,45 @@ Template.activityOverlay.events({
   },
   
   'submit': function(event, template) {
-	var self = this;
-
-	event.preventDefault();
-
-	var relatedId = $(event.target).find('#related').val()
+  	var self = this;
+  	event.preventDefault();
+  	var relatedId = $(event.target).find('#related').val()
 	var description = $(event.target).find('#description').val()
 	var tweet = Session.get(TWEETING_KEY);
+
+  	//Upload to AmazonS3
+  	var uploader = new Slingshot.Upload("myFileUploads");
+	var contentType = 'image/jpeg';
+    var b64Data = Session.get(IMAGE_KEY);
+	var blob = b64toBlob(b64Data, contentType);
 	
-	Meteor.call('createActivity', {
-	  wheels: relatedId,
-	  description: description,
-	  image: Session.get(IMAGE_KEY)
-	}, tweet, Geolocation.currentLocation(), function(error, result) {
-	  if (error) {
-		alert(error.reason);
-	  } else {
-	  	
-		notifyActivity(result);
+	Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0)) 
+	uploader.send(blob, function (error, downloadUrl) {
 
-		Template.appBody.addNotification({
-		  action: 'View',
-		  title: 'New activity added.',
-		  callback: function() {
-			Router.go('home');
-		  }
-		});
+		Meteor.call('createActivity', {
+			wheels: relatedId,
+			description: description,
+		 	image: downloadUrl
+		}, tweet, Geolocation.currentLocation(), function(error, result) {
+			if (error) {
+				alert(error.reason);
+		} else {
+		  	//Create DB Notifications
+		  	notifyActivity(result);
+		  	//Notify user
+			Template.appBody.addNotification({
+				action: 'View',
+				title: 'New activity added.',
+				callback: function() {
+					Router.go('home');
+				}
+			});
+			Overlay.close();
+		 }
+		});//Close activity
 
-	  }
-	});
-
-	Overlay.close();
+		
+	}); //Close upload
   },
 
    'click #connectFB': function(event){
@@ -145,4 +155,28 @@ function notifyActivity(activityId){
         Meteor.call('createNotification', notification);
     
     });
+}
+
+function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
 }
