@@ -4,10 +4,10 @@
         <div class="grid-content">
         
             <div class="form-group">
-                <label class="title-callout">Search</label>
-                <input type="text" id="search" placeholder="Search for type, maker or comment">
+                <label class="title-callout mts">Search</label>
+                <input type="text" id="search" placeholder="Search for type, maker, year and more...">
             </div>
-            <ul class="small-block-grid-3">
+            <ul class="small-block-grid-3 searchGrid">
                 {{#each lastSearch 1000}}
                     {{> imageGrid data=this url="wheels"}}
                 {{/each}}

@@ -4,12 +4,23 @@
     {{/nav}}
     <div class="grid-block">
         <div class="grid-content">
-            <div class="bg-image home">
-                <h1 class="title-home">
-                <img src="../img/app/logo-local.svg" alt="Local Market" />
-            </h1>
-            </div>            
-            {{> activity}} 
+            <img src="../img/app/logo-local.svg" alt="Local Market" />
+            
+            <section class="block-list">
+                <ul>
+                    <li>
+                        <header>NEWS</header>
+                        <div class="small-12 columns">
+                            <p class="mvs">{{latestNews.text}}</p>
+                        </div>
+                    </li>
+                    {{#each getRecent}}
+                    <li> 
+                        {{>yield}}           
+                     </li>
+                    {{/each}}
+                </ul>
+            </section>
         </div>
     </div>
 </template>

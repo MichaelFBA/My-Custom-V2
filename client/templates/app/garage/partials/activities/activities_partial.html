@@ -1,8 +1,8 @@
-<template name="activities">
+<template name="activities_partial">
     <ul class="small-block-grid-3">
     {{#each activities}}
     <li class="pan">
-        <a class="bg-image small block" href="../activity/{{_id}}" style="background-image: url('{{image}}')"></a>
+        <a class="block" href="../activity/{{_id}}"><img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}"></a>
     </li>
     {{/each}}
     </ul>

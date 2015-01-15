@@ -1,44 +1,84 @@
-::-webkit-scrollbar { 
-    display: none; 
+::-webkit-scrollbar {
+    display: none;
 }
-
 /*  Colors */
-.white{ color: #ffffff;}
-.primaryColor{color:#FFCD03;}
-.whiteSmokeBg{ background-color: #F5F5F5;}
-.blackBg{ background-color: #000000;}
-.whiteBg{ background-color: #FFF;}
-.btnTwitter { background-color: #46c8f5 !important;}
-.btnFacebook { background-color: #3b5999 !important; }
 
+.white {
+    color: #ffffff;
+}
+.primaryColor {
+    color: #FFCD03;
+}
+.whiteSmokeBg {
+    background-color: #F5F5F5;
+}
+.blackBg {
+    background-color: #000000;
+}
+.whiteBg {
+    background-color: #FFF;
+}
+.btnTwitter {
+    background-color: #46c8f5 !important;
+}
+.btnFacebook {
+    background-color: #3b5999 !important;
+}
 /*  Fonts  */
-.avenirBlack{ font-family: 'AvenirBlack'; }
-.avenirBook{ font-family: 'AvenirBook'; }
 
+.avenirBlack {
+    font-family: 'AvenirBlack';
+}
+.avenirBook {
+    font-family: 'AvenirBook';
+}
 /* Margin and Padding */
-.p1rem{padding:1rem;}
-.pt1rem{padding-top:1rem;}
 
+.p1rem {
+    padding: 1rem;
+}
+.pt1rem {
+    padding-top: 1rem;
+}
 /* Global Styles */
+
 .image-profile {
-  	-webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
     position: relative;
 }
-
 .bg-image.small {
     display: block;
     height: 8em;
     width: 100%;
 }
-
 .fullWidth {
-   width: 100% !important;
-   margin-left: auto !important;
-   margin-right: auto !important;
-   max-width: initial !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: initial !important;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.block-list.with-icons li img, .block-list.with-icons li .iconic {
+    border-radius: 50%;
+}
+.fa-1-5 {
+    font-size: 1.5em !important;
+}
+.card {
+    border: none;
+    margin-bottom: 0px;
+    background: #fff;
+    color: #000;
+    border-radius: 0px;
+    box-shadow: none;
+}
+.block-list{
+    flex: 1;
 }

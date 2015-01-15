@@ -1,4 +1,4 @@
-Template.activities.created = function () {
+Template.activities_partial.created = function () {
 
   // 1. Initialization
   
@@ -41,7 +41,7 @@ Template.activities.created = function () {
   
 };
 
-Template.activities.helpers({
+Template.activities_partial.helpers({
   // the activities cursor
   activities: function () {
     return Template.instance().activities();
@@ -56,7 +56,7 @@ Template.activities.helpers({
   }
 });
 
-Template.activities.events({
+Template.activities_partial.events({
   'click .load-more': function (event, instance) {
     event.preventDefault();
     

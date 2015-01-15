@@ -3,12 +3,11 @@
     {{#each wheels}}
     <a href="../wheels/{{_id}}">
 			<div class="grid-block shrink">
-                <div class="image-profile large" style="background-image: url('{{image}}')"></div>
-
+                <img src="//wit.wurfl.io/w_500/h_300/m_cropbox/{{image}}">
             </div>
             <div class="grid-block">
                 <div class="grid-content">
-                    <h2 class="mbn">{{make}} {{model}}</h2>
+                    <h5 class="mvs">{{make}} {{model}} <i class="fa fa-chevron-right right"></i></h5>
                 </div>
             </div>
 		</a>

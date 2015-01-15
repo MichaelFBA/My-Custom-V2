@@ -1,20 +1,28 @@
 <template name="wheels">
 	{{debug}}
-	{{> nav title='Wheels' black=true back=true}}
+	{{> nav back=true transparent=true black=true}}
 	<div class="grid-block vertical">
 		<div class="grid-content">
-			<div class="grid-block small-up-1">
-				<div class="grid-content pan">
-					<img src="{{image}}">
-				</div>
-				<div class="grid-content">
-					<h3 class="mbn tight mtm">{{make}} {{model}} <small>{{year}}</small></h3>
-					<p class="mts mbn">{{description}}</p>
-					{{#if place}}
-			            <small class="subheader">&mdash;{{place}}</small>
-			        {{/if}}
-				</div>
-			</div>
+			<section class="block-list">
+		        <ul>
+		        	<li>
+		        		<img src="//wit.wurfl.io/w_460/h_500/m_cropbox/{{image}}">
+		        		<span class="relative">
+			        		<a class="userAvatar block" href="../garage/{{userId}}"><img class="img-circle" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{userAvatar}}"></a>
+			        		<h3 class="tight mts mbn">{{make}} {{model}} <small class="txtM">{{year}}</small></h3>
+							<p class="mts mbn">{{description}}</p>
+							{{#if place}}
+					            <small class="subheader">&mdash;{{place}}</small>
+					        {{/if}}
+				        </span>
+		        	</li>
+		            {{#each relatedActivities}}
+		            <li>
+		                {{>activities}}
+		            </li>
+		            {{/each}}
+		        </ul>
+	    	</section>
 		</div>
 	</div>
 </template>

@@ -1,0 +1,12 @@
+.userAvatar{
+	position: absolute;
+	position: absolute;
+	top: -2rem;
+	right: 1rem;
+	width: 4rem;
+	height: 4rem;
+}
+.userAvatar img{
+	border:3px solid white;
+	width: 100%;
+}

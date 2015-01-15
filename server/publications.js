@@ -17,6 +17,10 @@ Meteor.publish('latestActivity', function(id, limit) {
   ]
 });
 
+Meteor.publish('news', function() {
+  return News.find({}, {sort: {date: -1}, limit: 1});
+});
+
 //--------------------------------------------------------------------------
 // Garage Page
 //--------------------------------------------------------------------------
@@ -73,7 +77,11 @@ Meteor.publish('likes', function(id, limit) {
 //--------------------------------------------------------------------------
 
 Meteor.publish('getActivity', function(id) {
-  return Activities.find({_id: id});
+  return [
+    Activities.find({_id: id}),
+    Likes.find({activityId: id}),
+    Comments.find({discussion_id: id})
+  ]
 });
 
 //--------------------------------------------------------------------------
@@ -81,7 +89,10 @@ Meteor.publish('getActivity', function(id) {
 //--------------------------------------------------------------------------
 
 Meteor.publish('getWheels', function(id) {
-  return Wheels.find({_id: id});
+  return [
+    Wheels.find({_id: id}),
+    Activities.find({wheels:id})
+    ]
 });
 
 //--------------------------------------------------------------------------
@@ -100,7 +111,13 @@ Meteor.publish('commonUserData', function(id) {
   return [
     Notifications.find({recipientId: this.userId}, {sort: {date: -1}, limit: 100}),
     Meteor.users.find({ _id: this.userId}, {fields: {'services':1}} )
-
   ];
 });
 
+//--------------------------------------------------------------------------
+// Search
+//--------------------------------------------------------------------------
+
+Meteor.publish('blankSearch', function() {
+  return Wheels.find({}, {sort: {date: -1}, limit: 99});
+});

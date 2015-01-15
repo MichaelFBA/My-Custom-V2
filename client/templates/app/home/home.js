@@ -1,7 +1,7 @@
 
 Template.home.helpers({
   
-  activities: function() {
+  getRecent: function() {
     return Activities.find();
   },
   

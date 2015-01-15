@@ -1,19 +1,6 @@
-<template name="activitys">
-	{{> nav title='About' black=true back=true}}
-	<div class="grid-block vertical">
-		<div class="grid-content">
-			<div class="grid-block small-up-1">
-				<div class="grid-content pan">
-					<img src="{{image}}">
-				</div>
-				<div class="grid-content">
-					<h3 class="mbn tight mtm">{{make}} {{model}} <small>{{year}}</small></h3>
-					<p class="mts mbn">{{description}}</p>
-					{{#if place}}
-			            <small class="subheader">&mdash;{{place}}</small>
-			        {{/if}}
-				</div>
-			</div>
-		</div>
-	</div>
+<template name="activity">
+    {{> nav back=true transparent=true black=true}}
+    <div class="grid-block"> 
+    {{> activities}}
+    </div>
 </template>

@@ -1,14 +1,11 @@
 <template name="likes">
-    <section class="block-list with-icons man">
-    <ul>
+    <ul class="small-block-grid-3">
     {{#each likes}}
-        <li>
-            <img src="{{getActivityImage activityId}}" alt="">
-            <a href="../activity/{{getActivityId activityId}}">{{getActivityId activityId}}</a>
-        </li>
+    <li class="pan">
+        <a class="block" href="../activity/{{getActivityId activityId}}"><img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{getActivityImage activityId}}"></a>
+    </li>
     {{/each}}
     </ul>
-    </section>
     {{#if isReady}} {{#if hasMoreLikes}}
     <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
     <div class="loading">Loading</div>
