@@ -6,15 +6,34 @@
 			<section class="block-list">
 		        <ul>
 		        	<li>
-		        		<img src="//wit.wurfl.io/w_460/h_500/m_cropbox/{{image}}">
-		        		<span class="relative">
-			        		<a class="userAvatar block" href="../garage/{{userId}}"><img class="img-circle" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{userAvatar}}"></a>
-			        		<h3 class="tight mts mbn">{{make}} {{model}} <small class="txtM">{{year}}</small></h3>
-							<p class="mts mbn">{{description}}</p>
-							{{#if place}}
-					            <small class="subheader">&mdash;{{place}}</small>
-					        {{/if}}
-				        </span>
+		        		<div class="card">
+					        <img src="//wit.wurfl.io/w_460/h_550/m_cropbox/{{image}}">
+					        <div class="card-section relative">
+					            <a class="userAvatar block" href="{{pathFor 'garage' _id=userId}}"><img class="img-circle" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{userAvatar}}"></a>
+					            <h3 class="tight mts mbn">{{make}} {{model}} <small class="txtM">{{year}}</small></h3>
+					            <p class="mbn">{{description}}</p>
+					            {{#if place}}
+					                <small class="subheader">{{place}}</small>
+					            {{/if}}
+
+					            <div class="mts">
+					            	<small class="subheader pull-right txtM">{{formatTime date }}</small>
+					                {{#if isliked}}
+					                    <a id="unlike"><i class="fa fa-1-5 fa-thumbs-up mrt"></i> </a>
+					                {{else}}
+					                    <a id="like"><i class="fa fa-1-5 fa-thumbs-o-up mrt"></i></a>
+					                {{/if}}
+					                {{#if likeCount}} <strong>{{likeCount}}</strong> {{/if}}
+
+					                {{#if hasCommented}}
+					                    <a class="mhs" href="/comments/{{_id}}"><i class="fa fa-1-5 fa-comments"></i></a>
+					                {{else}}
+					                    <a class="mhs" href="/comments/{{_id}}"><i class="fa fa-1-5 fa-comment-o"></i></a>
+					                {{/if}}
+					                {{#if commentCount}} <strong>{{commentCount}}</strong>{{/if}}
+					            </div>
+					        </div>
+					     </div>
 		        	</li>
 		            {{#each relatedActivities}}
 		            <li>

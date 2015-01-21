@@ -24,6 +24,14 @@ Overlay = {
   }
 }
 
+//Check if user Logged in
+Deps.autorun(isUserLoggedIn)
+
+function isUserLoggedIn(){
+  if( !Meteor.user())
+    Overlay.open('authOverlay');
+}
+
 Template.overlay.rendered = function() {
   this.find('#overlay-hook')._uihooks = {
     insertElement: function(node, next, done) {

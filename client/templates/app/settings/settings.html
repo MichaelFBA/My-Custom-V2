@@ -1,12 +1,10 @@
 <template name="settings">
-    {{> nav title='Settings' black=true}}
     <div class="grid-block">
         <div class="grid-content">
 
             <section class="block-list">
                 <header>Your Settings</header>
                 <ul>
-                    <li class="with-chevron"><a href="#" id="logout">Logout</a></li>
                     <li>
                         <span>Push Notifications</span>
                         <div class="switch">
@@ -28,6 +26,8 @@
                             <label for="connectTW" class="man" id="pushFB"></label>
                         </div>
                     </li>
+                    <li class="with-chevron"><a href="{{pathFor 'about'}}">About</a></li>
+                    <li class="with-chevron"><a href="#" id="logout">Logout</a></li>
                 </ul>
             </section>
         </div>

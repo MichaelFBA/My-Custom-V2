@@ -1,28 +1,24 @@
 <template name="garage">
-    {{#nav title=profile.name black=true}} {{#if notificationCount}}
-    <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><i class="fa fa-inbox primaryColor"> {{notificationCount}}</i></a> 
-    {{/if}} 
+    {{#nav transparent=true}} 
+        {{#if notificationCount}}
+            <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><i class="fa fa-inbox primaryColor"> {{notificationCount}}</i></a> 
+        {{/if}} 
     {{/nav}}
-    <div class="grid-block shrink whiteSmokeBg">
+    <div class="grid-block shrink darkBg white">
         <div class="grid-block shrink">
             <div class="grid-content p1rem">
-                <div class="image-profile small" style="background-image: url('{{profile.picture}}')"></div>
+                <div class="image-profile small" style="background-image: url('//wit.wurfl.io/w_150/h_150/m_cropbox/{{profile.picture}}')"></div>
             </div>
         </div>
         <div class="grid-block">
             <div class="grid-content p1rem">
-                <p class="mbn avenirBlack">{{profile.name}}</p>
-                <p class="mbn">{{profile.location}}Sydney, Australia</p>
-            </div>
-        </div>
-        <div class="grid-block">
-            <div class="grid-content shrink">
+                <p class="mbt tight ">{{profile.name}} <br> {{profile.location}}</p>
                 {{#if equal currentUser._id _id}}
-                <button id="editAccount" class="tiny button hollow primary mvs">Edit Profile</button>
+                <a id="editAccount" class="fss primary">Edit Profile</a>
                 {{else}} {{#if getFollowStatus _id}}
-                <button id="unfollow" class="tiny button hollow primary mvs">Stop Following</button>
+                <a id="unfollow" class="fss primary">Stop Following</a>
                 {{else}}
-                <button id="follow" class="tiny button hollow primary mvs">Follow</button>
+                <a id="follow" class="fss primary">Follow</a>
                 {{/if}} {{/if}}
             </div>
         </div>

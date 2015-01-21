@@ -5,10 +5,12 @@ Meteor.publish('latestActivity', function(id, limit) {
   Meteor._sleepForMs(1000);
   //Get Followers IDs
   var followersCursor = Followers.find({followerId: id}, {limit: limit});
-  var ids = followersCursor.map(function(p) { return p.userId });
+  var ids = followersCursor.map(function(val) {
+    return val.userId;
+  });
   //Get Activity Ids
   var ActivitiesCursor = Activities.find({ userId: { $in: ids } }, {limit: limit})
-  var activityIds = ActivitiesCursor.map(function(p) { return p._id });
+  var activityIds = ActivitiesCursor.map(function( p ) { return p._id });
   return [
     // Followers.find({followerId: id }, {limit: limit}),
     Activities.find({ userId: { $in: ids } }, {limit: limit}),
@@ -89,9 +91,24 @@ Meteor.publish('getActivity', function(id) {
 //--------------------------------------------------------------------------
 
 Meteor.publish('getWheels', function(id) {
+  //Get Activities IDs
+  var activitiesCursor = Activities.find({wheels: id});
+  var activityIds = activitiesCursor.map(function(a) {
+    return a._id;
+  });
+
+  //Get Wheels IDs
+  var wheelsCursor = Wheels.find({_id: id});
+  var wheelsId = wheelsCursor.map(function(a) {
+    return a._id;
+  });
+  var allIds = _.union(activityIds,wheelsId)
+
   return [
-    Wheels.find({_id: id}),
-    Activities.find({wheels:id})
+      Wheels.find({_id: id}),
+      Activities.find({wheels:id}),
+      Likes.find({ activityId: { $in: allIds } }),
+      Comments.find({ discussion_id: { $in: allIds } })
     ]
 });
 
@@ -100,7 +117,7 @@ Meteor.publish('getWheels', function(id) {
 //--------------------------------------------------------------------------
 
 Meteor.publish('getComments', function(id) {
-  return Comments.find({discussion_id: id}, {sort: {date: -1}, limit: 100});
+  return Comments.find({discussion_id: id}, {sort: {date: 1}, limit: 100});
 });
 
 //--------------------------------------------------------------------------

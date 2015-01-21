@@ -1,8 +1,11 @@
 <template name="activities">
+    {{debug}}
 	<div class="card">
-        <img src="//wit.wurfl.io/w_460/h_500/m_cropbox/{{image}}">
+        <a href="{{pathFor 'activity' _id=_id}}">
+            <img src="//wit.wurfl.io/w_460/h_550/m_cropbox/{{image}}">
+        </a>
         <div class="card-section relative">
-            <a class="userAvatar block" href="../garage/{{userId}}"><img class="img-circle" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{userAvatar}}"></a>
+            <a class="userAvatar block" href="{{pathFor 'garage' _id=userId}}"><img class="img-circle" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{userAvatar}}"></a>
             <p class="mbn">{{description}}</p>
             {{#if place}}
                 <small class="subheader">{{place}}</small>

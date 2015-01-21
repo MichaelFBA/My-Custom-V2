@@ -5,6 +5,7 @@ Template.editAccount.events({
 			'profile.name': $(event.target).find('#name').val(),
 			'profile.bio': $(event.target).find('#bio').val(),
 			'profile.website': $(event.target).find('#website').val(),
+			'profile.location': $(event.target).find('#location').val()
 		}
 		Meteor.call('updateUser', userData, function(error,result){
 			if(error) console.error(error)

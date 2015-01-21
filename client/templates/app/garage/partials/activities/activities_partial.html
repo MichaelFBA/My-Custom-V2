@@ -2,7 +2,7 @@
     <ul class="small-block-grid-3">
     {{#each activities}}
     <li class="pan">
-        <a class="block" href="../activity/{{_id}}"><img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}"></a>
+        <a class="block" href="{{pathFor 'activity' _id=_id}}"><img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}"></a>
     </li>
     {{/each}}
     </ul>

@@ -1,7 +1,9 @@
 Accounts.onCreateUser(function(options, user) {
-  if (options.profile)
-    user.profile = options.profile;
-    user.profile.notifications = true;
+  if (options.profile){
+     options.profile.picture = "https://s3.amazonaws.com/mycustom/defaultUser.png"
+     user.profile = options.profile;
+     user.profile.notifications = true;
+  }
 
 	if(user.services.facebook) {
         options.profile.picture = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=square&height=300&width=300";

@@ -1,1 +1,23 @@
-/* CSS declarations go here */
+.garageLink{
+	padding-top: 150px !important;
+}
+.userName{
+	color: #ffffff !important;
+}
+.username span{
+	color: #FFCD03 !important;
+}
+.menu-bar.dark a {
+	color: #fff;
+	font-size: 11px;
+	margin-bottom: 4px;
+	padding: 0px;
+}
+.menu-bar li img{
+	width: 45px !important;
+	height: 45px !important;
+	margin: 0px;
+}
+.menu-bar li a img{
+	margin: 0px !important;
+}

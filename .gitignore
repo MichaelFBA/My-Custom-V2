@@ -8,3 +8,15 @@ private/PushChatKey.pem
 server/amazon.js
 
 settings.json
+
+private/dev/PushChatCert.pem
+
+private/dev/PushChatKey.pem
+
+private/prod/PushChatCert.pem
+
+private/prod/PushChatKey.pem
+
+server/push.js
+
+server/push.js

@@ -27,8 +27,8 @@ Template.settings.events({
 	},
 
 	'click #logout': function(){
+		Router.go('/');
 		Meteor.logout();
-		Router.go('home');
 	}
 
 

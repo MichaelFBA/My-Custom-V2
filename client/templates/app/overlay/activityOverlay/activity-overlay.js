@@ -12,15 +12,12 @@ Template.activityOverlay.created = function() {
   var instance = this;
   // initialize the reactive variables
   instance.whichTemplate = new ReactiveVar("addNewMedia");
+  instance.phoneImage = new ReactiveVar();
 }
 
 Template.activityOverlay.helpers({
   attachedImage: function() {
   	return Session.get(IMAGE_KEY);
-  },
-  
-  avatar: function() {
-	return Meteor.user().services.twitter.profile_image_url_https;
   },
   
   tweeting: function() {
@@ -30,6 +27,7 @@ Template.activityOverlay.helpers({
   getWheels: function(){
 	return Wheels.find().fetch();
   },
+
   customChoice:function(){
 	if(  Template.instance().whichTemplate.get() ){
 		return Template[  Template.instance().whichTemplate.get() ];
@@ -44,7 +42,7 @@ Template.activityOverlay.events({
 		instance.whichTemplate.set( $(event.target).val() );
 	},
 
-  'click .js-attach-image': function() {
+  'click .js-attach-image': function(instance) {
 		navigator.camera.getPicture(onSuccess, onFail, { 
 			quality: 80,
 			destinationType: Camera.DestinationType.DATA_URL,
@@ -53,13 +51,14 @@ Template.activityOverlay.events({
 
 		function onSuccess(data) {
 			Session.set(IMAGE_KEY, data);
+			instance.phoneImage.set(data);
 		}
 
 		function onFail(message) {
 			alert('Failed because: ' + message);
 		}
   },
-  'click .js-camera-roll':function(event){
+  'click .js-camera-roll':function(event,instance){
 		navigator.camera.getPicture(onSuccess, onFail, { 
 			quality: 80,
 			destinationType: Camera.DestinationType.DATA_URL,
@@ -69,6 +68,7 @@ Template.activityOverlay.events({
 
 		function onSuccess(data) {
 			Session.set(IMAGE_KEY, data);
+			instance.phoneImage.set(data);
 		}
 
 		function onFail(message) {
@@ -102,14 +102,17 @@ Template.activityOverlay.events({
 		//Upload to AmazonS3
 		var uploader = new Slingshot.Upload("myFileUploads");
 		var contentType = 'image/jpeg';
-		var b64Data = Session.get(IMAGE_KEY);
+		// var b64Data = Session.get(IMAGE_KEY);
+		var b64Data = instance.phoneImage.get();
 		var blob = b64toBlob(b64Data, contentType);
 		
 		Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0)) 
 		uploader.send(blob, function (error, downloadUrl) {
-
+			console.error(whichTemplate)
+			console.log(downloadUrl)
 			switch(whichTemplate) {
 			    case "addNewMedia":
+			    	console.log('here after download url')
 					var description = $(event.target).find('#description').val()
 					addActivity(description,downloadUrl,"",tweet,facebook);
 			        break;
@@ -153,7 +156,8 @@ function addWheels(type,make,model,year,description,downloadUrl,tweet,facebook){
 	  image: downloadUrl
 	}, tweet, Geolocation.currentLocation(), function(error, result) {
 	  if (error) {
-		console.log(error);
+		alert(error.reason);
+		$('#progress').remove()
 	  } else {
 	  	notifyActivity(result)
 
@@ -177,6 +181,7 @@ function addActivity(description,downloadUrl,wheelsId,tweet,facebook){
 	}, tweet, Geolocation.currentLocation(), function(error, result) {
 		if (error) {
 			alert(error.reason);
+			$('#progress').remove()
 	} else {
 		//Create DB Notifications
 		notifyActivity(result);
@@ -185,7 +190,7 @@ function addActivity(description,downloadUrl,wheelsId,tweet,facebook){
 			action: 'View',
 			title: 'New activity added.',
 			callback: function() {
-				Router.go('home');
+				Router.go('/');
 			}
 		});
 		Overlay.close();
@@ -233,3 +238,4 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 	var blob = new Blob(byteArrays, {type: contentType});
 	return blob;
 }
+

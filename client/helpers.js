@@ -17,18 +17,6 @@ pluralize = function(n, thing, options) {
 
 Handlebars.registerHelper('pluralize', pluralize);
 
-var DIMENSIONS = {
-  small: '320x350',
-  large: '640x480',
-  full: '640x800'
-};
-
-UI.registerHelper('recipeImage', function(options) {
-  var size = options.hash.size || 'large';
-
-  if (options.hash.recipe)
-    return '/img/recipes/' + DIMENSIONS[size] + '/' + options.hash.recipe.name + '.jpg';
-});
 
 UI.registerHelper('activePage', function() {
   // includes Spacebars.kw but that's OK because the route name ain't that.

@@ -1,5 +1,4 @@
 <template name="search">
-    {{> nav title='Search' black=true}}
     <div class="grid-block">
         <div class="grid-content">
         
@@ -9,7 +8,13 @@
             </div>
             <ul class="small-block-grid-3 searchGrid">
                 {{#each lastSearch 1000}}
-                    {{> imageGrid data=this url="wheels"}}
+                    <!-- {{> imageGrid data=this url="wheels"}} -->
+                    {{debug}}
+                    <li class="pan">
+                        <a class="block" href="{{pathFor 'wheels' _id=_id}}">
+                            <img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}">
+                        </a>
+                    </li>
                 {{/each}}
             </ul>
             

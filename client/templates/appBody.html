@@ -1,37 +1,29 @@
 <template name="appBody">
-    {{> overlay}}
-    <div class="off-canvas left {{#if menuOpen}}is-active{{/if}}" position="left">
-        <aside id="menu">
-          <ul class="vertical menu-bar">
-            <li>
-                <a class="image-profile pth" href="/garage/{{currentUser._id}}" style="background-image:url({{currentUser.profile.picture}})">
-                <p class="avenirBlack white blackBg pat mbn">{{currentUser.profile.name}}</p>
-                </a>
-            </li>
-            <li><a href="{{pathFor 'home'}}"><i class="fa fa-newspaper-o mrs"></i> Stream</a></li>
-            <li><a href="{{pathFor 'about'}}"><i class="fa fa-bullhorn mrs"></i>About</a></li>
-            <li><a href="{{pathFor 'search'}}"><i class="fa fa-search mrs"></i> Search</a></li>
-            <li><a href="{{pathFor 'settings'}}"><i class="fa fa-cog mrs"></i> Settings</a></li>
-          </ul>
-        </aside>
-    </div>
-    <div id="content-container" class="grid-frame vertical">
-        {{> yield}}
-    </div>
-    <div class="notifications">
-        {{#unless connected}}
-          <div class="notification">
-            <span class="icon-sync"></span>
-            <div class="title-notification">Trying to connect</div>
-          </div>
-        {{/unless}}
-        {{#each notifications}}
-          <div class="notification">
-            <a class="button tiny js-notification-action">{{action}}</a>
-            <div class="title-notification">{{title}}</div>
-          </div>
-        {{/each}}
-    </div>
-    {{initFoundation}}
+	{{> overlay}}
+	<div id="content-container" class="grid-frame vertical">
+		{{> yield}}
+		  <ul class="dark man menu-bar icon-top">
+			<li><a href="{{pathFor 'home'}}"><img src="/img/app/tabs/i_tab_feed.png">Home</a></li>
+			<li><a href="{{pathFor 'search'}}"><img src="/img/app/tabs/i_tab_search.png">Search</a></li>
+			<li><a href="#" class="js-attach-quick-image"><img src="/img/app/tabs/i_tab_shot.png">Camera</a></li>
+			<li><a href="{{pathFor 'garage' _id=currentUser._id}}"><img src="/img/app/tabs/i_tab_user.png">Garage</a></li>
+			<li><a href="{{pathFor 'settings'}}"><img src="/img/app/tabs/i_tab_item.png">Settings</a></li>
+		  </ul>
+	</div>
+	<div class="notifications">
+		{{#unless connected}}
+		  <div class="notification">
+			<span class="icon-sync"></span>
+			<div class="title-notification">Trying to connect</div>
+		  </div>
+		{{/unless}}
+		{{#each notifications}}
+		  <div class="notification">
+			<a class="button tiny js-notification-action">{{action}}</a>
+			<div class="title-notification">{{title}}</div>
+		  </div>
+		{{/each}}
+	</div>
+	{{initFoundation}}
 </template>
 

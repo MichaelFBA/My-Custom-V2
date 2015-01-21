@@ -10,7 +10,7 @@ Template.comments.events({
             if (error) {
                 alert(error.reason);
             } else {
-            	Router.go('home')
+            	Router.go('/')
             }
         })
 

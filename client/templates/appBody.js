@@ -1,4 +1,4 @@
-var ANIMATION_DURATION = 300;
+var ANIMATION_DURATION = 500;
 var NOTIFICATION_TIMEOUT = 3000;
 var MENU_KEY = 'menuOpen';
 var SHOW_CONNECTION_ISSUE_KEY = 'showConnectionIssue';
@@ -54,40 +54,40 @@ Meteor.startup(function () {
 });
 
 Template.appBody.rendered = function() {
-  this.find("#content-container")._uihooks = {
-    insertElement: function(node, next) {
-      // short-circuit and just do it right away
-      if (initiator === 'menu')
-        return $(node).insertBefore(next);
+  // this.find("#content-container")._uihooks = {
+  //   insertElement: function(node, next) {
+  //     // short-circuit and just do it right away
+  //     if (initiator === 'menu')
+  //       return $(node).insertBefore(next);
       
-      var start = (initiator === 'back') ? '-100%' : '100%';
+  //     var start = (initiator === 'back') ? '-100%' : '100%';
       
-      $.Velocity.hook(node, 'translateX', start);
-      $(node)
-        .insertBefore(next)
-        .velocity({translateX: [0, start]}, {
-          duration: ANIMATION_DURATION,
-          easing: 'ease-in-out',
-          queue: false
-        });
-    },
-    removeElement: function(node) {
-      if (initiator === 'menu')
-        return $(node).remove();
+  //     $.Velocity.hook(node, 'translateX', start);
+  //     $(node)
+  //       .insertBefore(next)
+  //       .velocity({translateY: [0, start]}, {
+  //         duration: ANIMATION_DURATION,
+  //         easing: 'ease-in-out',
+  //         queue: false
+  //       });
+  //   },
+  //   removeElement: function(node) {
+  //     if (initiator === 'menu')
+  //       return $(node).remove();
       
-      var end = (initiator === 'back') ? '100%' : '-100%';
+  //     var end = (initiator === 'back') ? '100%' : '-100%';
       
-      $(node)
-        .velocity({translateX: end}, {
-          duration: ANIMATION_DURATION,
-          easing: 'ease-in-out',
-          queue: false,
-          complete: function() {
-            $(node).remove();
-          }
-        });
-    }
-  };
+  //     $(node)
+  //       .velocity({translateY: end}, {
+  //         duration: ANIMATION_DURATION,
+  //         easing: 'ease-in-out',
+  //         queue: false,
+  //         complete: function() {
+  //           $(node).remove();
+  //         }
+  //       });
+  //   }
+  // };
 
   // this.find(".notifications")._uihooks = {
   //   insertElement: function(node, next) {
@@ -174,7 +174,6 @@ Template.appBody.events({
     }
   },
   'click .js-attach-quick-image': function() {
-      console.log('activity overlay app body')
       Overlay.open('activityOverlay', this);
   }
 });

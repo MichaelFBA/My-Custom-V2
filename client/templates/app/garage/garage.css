@@ -1,4 +1,4 @@
-.image-profile.small{width: 60px; height:60px;}
+.image-profile.small{width: 60px; height:60px; border-radius: 50%;}
 .image-profile.large{width: 100%; min-height:400px;}
 .scroll-section{ overflow-x: scroll;-webkit-overflow-scrolling: touch; }
 

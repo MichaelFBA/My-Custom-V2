@@ -1,26 +1,24 @@
 <template name="home">
-    {{#nav title='My Custom' black=true}}
-        <a href="#" class="nav-item js-attach-quick-image"><i class="fa fa-camera"></i></a> 
-    {{/nav}}
     <div class="grid-block">
+
         <div class="grid-content">
-            <img src="../img/app/logo-local.svg" alt="Local Market" />
-            
-            <section class="block-list">
-                <ul>
+            <ul class="block-list">
+                <li class="darkBg white">
+                    <p class="mas"><span class="primaryColor fss">NEWS</span><br>
+                    {{latestNews.text}}
+                    </p>
+                </li>
+                {{#each feed}}
                     <li>
-                        <header>NEWS</header>
-                        <div class="small-12 columns">
-                            <p class="mvs">{{latestNews.text}}</p>
-                        </div>
+                        {{> activities}}
                     </li>
-                    {{#each getRecent}}
-                    <li> 
-                        {{>yield}}           
-                     </li>
-                    {{/each}}
-                </ul>
-            </section>
+                {{/each}}
+            </ul>
+            {{#if isReady}} {{#if hasMoreActivities}}
+            <a class="load-more expand button tiny" href="#">Load More</a> {{/if}} {{else}}
+            <div class="loading">Loading</div>
+            {{/if}}
         </div>
     </div>
 </template>
+
