@@ -1,10 +1,9 @@
 var TWEETING_KEY = 'shareOverlayTweeting';
 var FACEBOOK_KEY = 'shareOverlayFacebook';
-var IMAGE_KEY = 'shareOverlayAttachedImage';
 
 Template.activityOverlay.created = function() {
-  Session.set(TWEETING_KEY, false);
-  Session.set(IMAGE_KEY, null);
+  Session.set(TWEETING_KEY, _.has( Meteor.user().services, 'twitter' ) );
+  Session.set(FACEBOOK_KEY, _.has( Meteor.user().services ,'facebook' ) );
 
   Meteor.subscribe('wheels', Meteor.userId(), 1000);
 
@@ -17,11 +16,7 @@ Template.activityOverlay.created = function() {
 
 Template.activityOverlay.helpers({
   attachedImage: function() {
-  	return Session.get(IMAGE_KEY);
-  },
-  
-  tweeting: function() {
-	return Session.get(TWEETING_KEY);
+  	return Template.instance().phoneImage.get()
   },
 
   getWheels: function(){
@@ -50,7 +45,6 @@ Template.activityOverlay.events({
 			});
 
 		function onSuccess(data) {
-			Session.set(IMAGE_KEY, data);
 			instance.phoneImage.set(data);
 		}
 
@@ -67,7 +61,6 @@ Template.activityOverlay.events({
 			});
 
 		function onSuccess(data) {
-			Session.set(IMAGE_KEY, data);
 			instance.phoneImage.set(data);
 		}
 
@@ -76,15 +69,15 @@ Template.activityOverlay.events({
 		}
   },
 
-	'click .js-unattach-image': function() {
-		Session.set(IMAGE_KEY, null);
+	'click .js-unattach-image': function(instance) {
+		instance.phoneImage.set(null);
 	},
 
 	'change #type': function(event) {
 		Session.set("Type", window[$(event.target).val()] );
 	},
   
-	'change [name=tweeting]': function(event) {
+	'change [name=twitter]': function(event) {
 		Session.set(TWEETING_KEY, $(event.target).is(':checked'));
 	},
 
@@ -102,19 +95,20 @@ Template.activityOverlay.events({
 		//Upload to AmazonS3
 		var uploader = new Slingshot.Upload("myFileUploads");
 		var contentType = 'image/jpeg';
-		// var b64Data = Session.get(IMAGE_KEY);
 		var b64Data = instance.phoneImage.get();
 		var blob = b64toBlob(b64Data, contentType);
 		
 		Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0)) 
 		uploader.send(blob, function (error, downloadUrl) {
-			console.error(whichTemplate)
-			console.log(downloadUrl)
 			switch(whichTemplate) {
 			    case "addNewMedia":
-			    	console.log('here after download url')
 					var description = $(event.target).find('#description').val()
-					addActivity(description,downloadUrl,"",tweet,facebook);
+					if(!tweet){
+						b64Data = '';
+					}else if(facebook){
+						postToFB(description, downloadUrl)
+					}
+					addActivity(description,downloadUrl,"",tweet, b64Data);
 			        break;
 			    case "addCustom":
 			        var type = $(event.target).find('#type').val()
@@ -122,12 +116,22 @@ Template.activityOverlay.events({
 					var model = $(event.target).find('#model').val()
 					var year = $(event.target).find('#year').val()
 					var description = $(event.target).find('#description').val()
-					addWheels(type,make,model,year,description,downloadUrl,tweet,facebook)
+					if(!tweet){
+						b64Data = '';
+					}else if(facebook){
+						postToFB(description, downloadUrl)
+					}
+					addWheels(type,make,model,year,description,downloadUrl,tweet, b64Data)
 			        break;
 			    case "addToExisting":
 			    	var description = $(event.target).find('#description').val()
 			    	var relatedId = $(event.target).find('#related').val()
-					addActivity(description,downloadUrl,relatedId,tweet,facebook);
+			    	if(!tweet){
+						b64Data = '';
+					}else if(facebook){
+						postToFB(description, downloadUrl)
+					}
+					addActivity(description,downloadUrl,relatedId,tweet, b64Data);
 			        break;
 			}
 
@@ -146,14 +150,15 @@ Template.activityOverlay.events({
    }
 });
 
-function addWheels(type,make,model,year,description,downloadUrl,tweet,facebook){
+function addWheels(type,make,model,year,description,downloadUrl,tweet, b64DataForTwitter){
 	Meteor.call('createWheels', {
 	  type: type,
 	  make: make,
 	  model: model,
 	  year: year,
 	  description: description,
-	  image: downloadUrl
+	  image: downloadUrl,
+	  b64Data: b64DataForTwitter
 	}, tweet, Geolocation.currentLocation(), function(error, result) {
 	  if (error) {
 		alert(error.reason);
@@ -173,11 +178,12 @@ function addWheels(type,make,model,year,description,downloadUrl,tweet,facebook){
 	});
 }
 
-function addActivity(description,downloadUrl,wheelsId,tweet,facebook){
+function addActivity(description,downloadUrl,wheelsId,tweet, b64DataForTwitter){
 	Meteor.call('createActivity', {
 		wheels: wheelsId,
 		description: description,
-		image: downloadUrl
+		image: downloadUrl,
+		b64Data: b64DataForTwitter
 	}, tweet, Geolocation.currentLocation(), function(error, result) {
 		if (error) {
 			alert(error.reason);
@@ -237,5 +243,15 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 
 	var blob = new Blob(byteArrays, {type: contentType});
 	return blob;
+}
+
+function postToFB(description, imageUrl){
+  FB.api('/me/feed', 'post', { message: description, picture: imageUrl, application: 1451011255133475 }, function(response) {
+    if (!response || response.error) {
+      console.log('Error occured');
+    } else {
+      console.log('Post ID: ' + response.id);
+    }
+  });
 }
 

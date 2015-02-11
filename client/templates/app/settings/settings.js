@@ -3,8 +3,7 @@ Template.settings.helpers({
 		return Meteor.user() && Meteor.user().profile.notifications;
 	},
 	hasFB: function () {
-		// return Meteor.user() && Meteor.user().services.facebook;
-		return false;
+		return Meteor.user() && Meteor.user().services.facebook;
 	},
 	hasTW: function () {
 		return Meteor.user() && Meteor.user().services.twitter;
