@@ -1,16 +1,16 @@
 Template.likes.created = function () {
 
   // 1. Initialization
-  
+
   var instance = this;
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
   instance.limit = new ReactiveVar(20);
   instance.ready = new ReactiveVar(false);
-  
+
   // 2. Autorun
-  
+
   // will re-run when the "limit" reactive variables changes
   this.autorun(function () {
 
@@ -18,7 +18,7 @@ Template.likes.created = function () {
     var limit = instance.limit.get();
 
     console.log("Asking for "+limit+" likes…")
-    
+
     // subscribe to the likes publication
     var subscription = Meteor.subscribe('likes', Router.current().params['_id'], limit);
 
@@ -32,13 +32,13 @@ Template.likes.created = function () {
       console.log("> Subscription is not ready yet. \n\n");
     }
   });
-  
+
   // 3. Cursor
-  
-  instance.likes = function() { 
+
+  instance.likes = function() {
     return Likes.find({ likedById: Meteor.userId() }, {limit: instance.loaded.get()});
   }
-  
+
 };
 
 Template.likes.helpers({
@@ -56,20 +56,28 @@ Template.likes.helpers({
   },
   //getActivity Image
   getActivityImage: function(id){
-    return Activities.findOne(id).image;
+    var data = Activities.findOne(id);
+    if (data) {
+      return data.image;
+    }
+    return "no data yet";
   },
   getActivityId: function(id){
-    return Activities.findOne(id)._id;
+    var data = Activities.findOne(id);
+    if (data) {
+      return data._id;
+    }
+    return "no data yet";
   }
 });
 
 Template.likes.events({
   'click .load-more': function (event, instance) {
     event.preventDefault();
-    
+
     // get current value for limit, i.e. how many likes are currently displayed
     var limit = instance.limit.get();
-    
+
     // increase limit by 20 and update it
     limit += 20;
 

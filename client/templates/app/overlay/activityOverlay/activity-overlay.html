@@ -12,7 +12,7 @@
 
         <div class="grid-block">
             <div class="grid-content text-center">
-                
+
                 <img class="mtm image75" src="../img/app/snake-head.svg" alt="Snake" />
                 <h2 class="white avenirBlack mbn tight">Whats new</h2>
                 <p>Share your latest custom addition.</p>
@@ -36,11 +36,11 @@
                 </div>
             </div>
         </div>
-        {{else}} 
+        {{else}}
         <div class="grid-block whiteBg">
             <div class="grid-content">
-            <div class="image-profile medium mvs" style="background-image: url('data:image/jpeg;base64,{{attachedImage}}')"></div>
-            
+            <div class="image-profile medium mvs" style="background-image: url('{{attachedImage}}')"></div>
+
             <form class="form-share">
                 <div class="grid-block">
                     <div class="small-12 medium-6 grid-content">
@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="small-12 medium-6 grid-content">
-                        <div id="progress"></div> 
+                        <div id="progress"></div>
                         <button type='submit' class="button primary expand">Share {{percent_uploaded}}</button>
                     </div>
                 </div>

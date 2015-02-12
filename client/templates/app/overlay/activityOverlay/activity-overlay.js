@@ -37,36 +37,66 @@ Template.activityOverlay.events({
 		instance.whichTemplate.set( $(event.target).val() );
 	},
 
-  'click .js-attach-image': function(instance) {
-		navigator.camera.getPicture(onSuccess, onFail, { 
-			quality: 80,
-			destinationType: Camera.DestinationType.DATA_URL,
-			correctOrientation:true
-			});
-
-		function onSuccess(data) {
-			instance.phoneImage.set(data);
+  'click .js-attach-image': function(event,instance) {
+  		var options = {
+  			height:1000,
+  			width: 1000,
+		 	quality: 80
 		}
+		MeteorCamera.getPicture(options, function(err, data) {
+		  if (err) {
+		    console.log('error', err);
+		  }
+		  if (data) {
+		    instance.phoneImage.set(data);
+		    console.log('here')
+		  }
+		});
 
-		function onFail(message) {
-			alert('Failed because: ' + message);
-		}
+		// navigator.camera.getPicture(onSuccess, onFail, {
+		// 	quality: 80,
+		// 	destinationType: Camera.DestinationType.DATA_URL,
+		// 	correctOrientation:true
+		// 	});
+
+		// function onSuccess(data) {
+		// 	instance.phoneImage.set(data);
+		// }
+
+		// function onFail(message) {
+		// 	alert('Failed because: ' + message);
+		// }
   },
   'click .js-camera-roll':function(event,instance){
-		navigator.camera.getPicture(onSuccess, onFail, { 
+  		var options = {
+  			height: 1000,
+			width: 1000,
 			quality: 80,
-			destinationType: Camera.DestinationType.DATA_URL,
-			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-			correctOrientation:true
-			});
-
-		function onSuccess(data) {
-			instance.phoneImage.set(data);
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY
 		}
+		MeteorCamera.getPicture(options, function(err, data) {
+		  if (err) {
+		    console.log('error', err);
+		  }
+		  if (data) {
+		    instance.phoneImage.set(data);
+		  }
+		});
 
-		function onFail(message) {
-			alert('Failed because: ' + message);
-		}
+		// navigator.camera.getPicture(onSuccess, onFail, {
+		// 	quality: 80,
+		// 	destinationType: Camera.DestinationType.DATA_URL,
+		// 	sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+		// 	correctOrientation:true
+		// 	});
+
+		// function onSuccess(data) {
+		// 	instance.phoneImage.set(data);
+		// }
+
+		// function onFail(message) {
+		// 	alert('Failed because: ' + message);
+		// }
   },
 
 	'click .js-unattach-image': function(instance) {
@@ -76,7 +106,7 @@ Template.activityOverlay.events({
 	'change #type': function(event) {
 		Session.set("Type", window[$(event.target).val()] );
 	},
-  
+
 	'change [name=twitter]': function(event) {
 		Session.set(TWEETING_KEY, $(event.target).is(':checked'));
 	},
@@ -95,10 +125,10 @@ Template.activityOverlay.events({
 		//Upload to AmazonS3
 		var uploader = new Slingshot.Upload("myFileUploads");
 		var contentType = 'image/jpeg';
-		var b64Data = instance.phoneImage.get();
+		var b64Data = instance.phoneImage.get().replace(/^data.*base64,/, '');
 		var blob = b64toBlob(b64Data, contentType);
-		
-		Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0)) 
+
+		Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0))
 		uploader.send(blob, function (error, downloadUrl) {
 			switch(whichTemplate) {
 			    case "addNewMedia":
@@ -209,7 +239,7 @@ function notifyActivity(activityId){
 	var followers = Followers.find({userId:Meteor.userId()}).fetch()
 
 	_.each(followers, function(value, key, list){
-	
+
 		var notification = {
 			recipientId : value.followerId,
 			activityType: 'activity',
@@ -217,7 +247,7 @@ function notifyActivity(activityId){
 			objectType: 'activity'
 		}
 		Meteor.call('createNotification', notification);
-	
+
 	});
 }
 
