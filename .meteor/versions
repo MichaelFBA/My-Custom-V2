@@ -42,6 +42,7 @@ less@1.0.12
 livedata@1.0.12
 localstorage@1.0.2
 logging@1.0.6
+matteodem:easy-search@1.4.13
 matthew:foundation5-sass@1.0.0
 mdg:camera@1.1.4
 mdg:geolocation@1.0.2
@@ -52,6 +53,7 @@ minimongo@1.0.6
 mobile-status-bar@1.0.2
 mondora:connect-with@0.1.2
 mongo@1.0.11
+mongo-livedata@1.0.7
 mrt:moment@2.8.1
 npm-bcrypt@0.7.7
 oauth@1.1.3

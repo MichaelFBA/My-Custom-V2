@@ -10,12 +10,12 @@ Session.setDefault(MENU_KEY, false);
 
 // XXX: this work around until IR properly supports this
 //   IR refactor will include Location.back, which will ensure that initator is
-//   set 
+//   set
 var nextInitiator = null, initiator = null;
 Deps.autorun(function() {
   // add a dep
   Router.current();
-  
+
   initiator = nextInitiator;
   nextInitiator = null;
 });
@@ -28,19 +28,9 @@ Template.appBody.addNotification = function(notification) {
   Meteor.setTimeout(function() {
     notifications.remove(id);
   }, NOTIFICATION_TIMEOUT);
-} 
+}
 
 Meteor.startup(function () {
-  // set up a swipe left / right handler
-  // $(document.body).touchwipe({
-  //   wipeLeft: function () {
-  //     Session.set(MENU_KEY, false);
-  //   },
-  //   wipeRight: function () {
-  //     Session.set(MENU_KEY, true);
-  //   },
-  //   preventDefaultEvents: false
-  // });
 
   // Only show the connection error box if it has been 5 seconds since
   // the app started
@@ -59,9 +49,9 @@ Template.appBody.rendered = function() {
   //     // short-circuit and just do it right away
   //     if (initiator === 'menu')
   //       return $(node).insertBefore(next);
-      
+
   //     var start = (initiator === 'back') ? '-100%' : '100%';
-      
+
   //     $.Velocity.hook(node, 'translateX', start);
   //     $(node)
   //       .insertBefore(next)
@@ -74,9 +64,9 @@ Template.appBody.rendered = function() {
   //   removeElement: function(node) {
   //     if (initiator === 'menu')
   //       return $(node).remove();
-      
+
   //     var end = (initiator === 'back') ? '100%' : '-100%';
-      
+
   //     $(node)
   //       .velocity({translateY: end}, {
   //         duration: ANIMATION_DURATION,
@@ -89,25 +79,25 @@ Template.appBody.rendered = function() {
   //   }
   // };
 
-  // this.find(".notifications")._uihooks = {
-  //   insertElement: function(node, next) {
-  //     $(node)
-  //       .insertBefore(next)
-  //       .velocity("slideDown", { 
-  //         duration: ANIMATION_DURATION, 
-  //         easing: [0.175, 0.885, 0.335, 1.05]
-  //       });
-  //   },
-  //   removeElement: function(node) {
-  //     $(node)
-  //       .velocity("fadeOut", {
-  //         duration: ANIMATION_DURATION,
-  //         complete: function() {
-  //           $(node).remove();
-  //         }
-  //       });
-  //   }
-  // };
+  this.find(".notifications")._uihooks = {
+    insertElement: function(node, next) {
+      $(node)
+        .insertBefore(next)
+        .velocity("slideDown", {
+          duration: ANIMATION_DURATION,
+          easing: [0.175, 0.885, 0.335, 1.05]
+        });
+    },
+    removeElement: function(node) {
+      $(node)
+        .velocity("fadeOut", {
+          duration: ANIMATION_DURATION,
+          complete: function() {
+            $(node).remove();
+          }
+        });
+    }
+  };
 }
 
 
@@ -115,11 +105,11 @@ Template.appBody.helpers({
   menuOpen: function() {
     return Session.get(MENU_KEY) && 'menu-open';
   },
-  
+
   overlayOpen: function() {
     return Overlay.isOpen() ? 'overlay-open' : '';
   },
-  
+
   connected: function() {
     if (Session.get(SHOW_CONNECTION_ISSUE_KEY)) {
       return Meteor.status().connected;
@@ -127,7 +117,7 @@ Template.appBody.helpers({
       return true;
     }
   },
-  
+
   notifications: function() {
     return notifications.find();
   }
@@ -142,13 +132,13 @@ Template.appBody.events({
 
   'click .js-back': function(event) {
     nextInitiator = 'back';
-    
+
     // XXX: set the back transition via Location.back() when IR 1.0 hits
     history.back();
     event.stopImmediatePropagation();
     event.preventDefault();
   },
-  
+
   'click a.js-open': function(event) {
     // On Cordova, open links in the system browser rather than In-App
     if (Meteor.isCordova) {
@@ -166,7 +156,7 @@ Template.appBody.events({
     nextInitiator = 'menu'
     Session.set(MENU_KEY, false);
   },
-  
+
   'click .js-notification-action': function() {
     if (_.isFunction(this.callback)) {
       this.callback();

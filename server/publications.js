@@ -2,7 +2,7 @@
 // Home Page
 //--------------------------------------------------------------------------
 Meteor.publish('latestActivity', function(id, limit) {
-  Meteor._sleepForMs(1000);
+  // Meteor._sleepForMs(100);
   //Get Followers IDs
   var followersCursor = Followers.find({followerId: id}, {limit: limit});
   var ids = followersCursor.map(function(val) {
@@ -13,7 +13,7 @@ Meteor.publish('latestActivity', function(id, limit) {
   var activityIds = ActivitiesCursor.map(function( p ) { return p._id });
   return [
     // Followers.find({followerId: id }, {limit: limit}),
-    Activities.find({ userId: { $in: ids } }, {limit: limit}),
+    Activities.find({ userId: { $in: ids } }, {sort: {date: -1}, limit: limit}),
     Likes.find({ activityId: { $in: activityIds } }, {limit: limit}),
     Comments.find({ discussion_id: { $in: activityIds } }, {limit: limit}),
   ]
@@ -32,19 +32,19 @@ Meteor.publish('getGarage', function(id) {
 
 // Publish Wheels
 Meteor.publish('wheels', function(id, limit) {
-  Meteor._sleepForMs(1000);
+  // Meteor._sleepForMs(1000);
   return Wheels.find({userId: id }, {limit: limit});
 });
 
 // Publish Activities
 Meteor.publish('activities', function(id, limit) {
-  Meteor._sleepForMs(1000);
+  // Meteor._sleepForMs(1000);
   return Activities.find({userId: id }, {limit: limit});
 });
 
 // Publish Followers
 Meteor.publish('followers', function(id, limit) {
-  Meteor._sleepForMs(1000);
+  // Meteor._sleepForMs(1000);
   var followersCursor = Followers.find({userId: id }, {limit: limit});
   var ids = followersCursor.map(function(p) { return p.followerId });
   return [
@@ -55,7 +55,7 @@ Meteor.publish('followers', function(id, limit) {
 
 // Publish Following
 Meteor.publish('following', function(id, limit) {
-  Meteor._sleepForMs(1000);
+  // Meteor._sleepForMs(1000);
   var followersCursor = Followers.find({followerId: id}, {limit: limit});
   var ids = followersCursor.map(function(p) { return p.userId });
   return [
@@ -65,7 +65,7 @@ Meteor.publish('following', function(id, limit) {
 });
 // Publish Likes
 Meteor.publish('likes', function(id, limit) {
-  Meteor._sleepForMs(1000);
+  // Meteor._sleepForMs(1000);
   var likesCursor = Likes.find({likedById: id}, {limit: limit});
   var ids = likesCursor.map(function(p) { return p.activityId });
   return [

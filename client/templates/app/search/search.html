@@ -1,23 +1,33 @@
 <template name="search">
     <div class="grid-block">
         <div class="grid-content">
-        
+
             <div class="form-group">
                 <label class="title-callout mts">Search</label>
-                <input type="text" id="search" placeholder="Search for type, maker, year and more...">
+                {{> esInput id="search" index="wheels" placeholder="Search for type, maker, year and more..." }}
             </div>
+
+
             <ul class="small-block-grid-3 searchGrid">
-                {{#each lastSearch 1000}}
-                    <!-- {{> imageGrid data=this url="wheels"}} -->
-                    {{debug}}
+                {{#esEach index="wheels"}}
                     <li class="pan">
                         <a class="block" href="{{pathFor 'wheels' _id=_id}}">
                             <img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}">
                         </a>
                     </li>
-                {{/each}}
+                {{/esEach}}
             </ul>
-            
+
+            {{> esLoadMoreButton index="wheels"}}
+
+            {{#ifEsHasNoResults index="wheels"}}
+                <div class="no-results">No results found!</div>
+            {{/ifEsHasNoResults}}
+
+            {{#ifEsIsSearching index="wheels"}}
+                    <div class="loading"></div>
+            {{/ifEsIsSearching}}
+
         </div>
     </div>
 </template>

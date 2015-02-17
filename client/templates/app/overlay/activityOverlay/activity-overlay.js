@@ -196,6 +196,8 @@ function addWheels(type,make,model,year,description,downloadUrl,tweet, b64DataFo
 	  } else {
 	  	notifyActivity(result)
 
+	  	Router.go('/')
+
 		Template.appBody.addNotification({
 		  action: 'View',
 		  title: 'Your custom was added.',
@@ -221,6 +223,9 @@ function addActivity(description,downloadUrl,wheelsId,tweet, b64DataForTwitter){
 	} else {
 		//Create DB Notifications
 		notifyActivity(result);
+
+		Router.go('/')
+
 		//Notify user
 		Template.appBody.addNotification({
 			action: 'View',

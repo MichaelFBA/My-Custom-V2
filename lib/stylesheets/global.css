@@ -86,6 +86,19 @@
     flex: 1;
 }
 
+/*Loading*/
+.connectionIssue{
+  color: white;
+  padding: 22px;
+  height: 60px;
+  background-color: red;
+}
+.notifications{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
 /*Panel*/
 .panel-fixed{
     -ms-transform: translate3D(-100%,0,0); /* IE 9 */
@@ -102,4 +115,44 @@
     -webkit-transform: translate3D(0,0,0); /* Chrome, Safari, Opera */
     transform: translate3D(0,0,0);
 }
+
+.loading {
+  margin: 6em auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(0, 0, 0, 0.2);
+  border-right: 1.1em solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1.1em solid rgba(0, 0, 0, 0.2);
+  border-left: 1.1em solid #FFCD03;
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+.loading,
+.loading:after {
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 
