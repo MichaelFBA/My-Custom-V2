@@ -9,7 +9,7 @@ Meteor.startup(function() {
       appId      : '1451011255133475',
       status     : true,
       xfbml      : true,
-      version    : 'v2.0'
+      version    : 'v2.2'
     });
   };
 });

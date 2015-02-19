@@ -55,7 +55,9 @@ mondora:connect-with@0.1.2
 mongo@1.0.11
 mongo-livedata@1.0.7
 mrt:moment@2.8.1
+mrt:twit@0.2.0
 npm-bcrypt@0.7.7
+npm-container@1.0.0
 oauth@1.1.3
 oauth1@1.1.3
 oauth2@1.1.2

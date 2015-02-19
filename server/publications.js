@@ -8,14 +8,18 @@ Meteor.publish('latestActivity', function(id, limit) {
   var ids = followersCursor.map(function(val) {
     return val.userId;
   });
+
+  ids = _.union(id,ids) // user current user to query
+
   //Get Activity Ids
-  var ActivitiesCursor = Activities.find({ userId: { $in: ids } }, {limit: limit})
+  var ActivitiesCursor = Activities.find({ userId: { $in: ids } })
   var activityIds = ActivitiesCursor.map(function( p ) { return p._id });
+
   return [
     // Followers.find({followerId: id }, {limit: limit}),
     Activities.find({ userId: { $in: ids } }, {sort: {date: -1}, limit: limit}),
-    Likes.find({ activityId: { $in: activityIds } }, {limit: limit}),
-    Comments.find({ discussion_id: { $in: activityIds } }, {limit: limit}),
+    Likes.find({ activityId: { $in: activityIds } }),
+    Comments.find({ discussion_id: { $in: activityIds } }),
   ]
 });
 

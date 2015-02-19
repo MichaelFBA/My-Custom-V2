@@ -1,16 +1,16 @@
 Template.home.created = function () {
 
   // 1. Initialization
-  
+
   var instance = this;
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.limit = new ReactiveVar(50);
+  instance.limit = new ReactiveVar(10);
   instance.ready = new ReactiveVar(false);
-  
+
   // 2. Autorun
-  
+
   // will re-run when the "limit" reactive variables changes
   this.autorun(function () {
 
@@ -18,7 +18,7 @@ Template.home.created = function () {
     var limit = instance.limit.get();
 
     console.log("Asking for "+limit+" activities…")
-    
+
     // subscribe to the activities publication
     var subscription = Meteor.subscribe('latestActivity', Meteor.userId() , limit);
 
@@ -32,13 +32,13 @@ Template.home.created = function () {
       console.log("> Subscription is not ready yet. \n\n");
     }
   });
-  
+
   // 3. Cursor
-  
-  instance.activities = function() { 
-    return Activities.find({}, {limit: instance.loaded.get()});
+
+  instance.activities = function() {
+    return Activities.find({},{sort: {date: -1}, limit: instance.loaded.get()});
   }
-  
+
 };
 
 Template.home.helpers({
@@ -66,10 +66,10 @@ Template.home.events({
 
   'click .load-more': function (event, instance) {
     event.preventDefault();
-    
+
     // get current value for limit, i.e. how many activities are currently displayed
     var limit = instance.limit.get();
-    
+
     // increase limit by 5 and update it
     limit += 10;
     instance.limit.set(limit)

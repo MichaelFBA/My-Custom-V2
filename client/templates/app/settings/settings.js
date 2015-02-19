@@ -29,6 +29,4 @@ Template.settings.events({
 		Router.go('/');
 		Meteor.logout();
 	}
-
-
 });

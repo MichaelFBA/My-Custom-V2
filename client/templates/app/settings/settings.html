@@ -3,7 +3,15 @@
         <div class="grid-content">
 
             <section class="block-list">
-                <header>Your Settings</header>
+                <header class="avenirBlack">Follow People</header>
+                <ul>
+                    <li class="with-chevron"><a href="#">Find Facebook Contacts</a></li>
+                    <li class="with-chevron"><a href="{{pathFor 'findTwitter'}}">Find Twitter Contacts</a></li>
+                </ul>
+            </section>
+
+            <section class="block-list">
+                <header class="avenirBlack">Settings</header>
                 <ul>
                     <li>
                         <span>Push Notifications</span>
@@ -26,10 +34,18 @@
                             <label for="connectTW" class="man" id="pushFB"></label>
                         </div>
                     </li>
+                </ul>
+            </section>
+
+            <section class="block-list">
+                <header class="avenirBlack">Other</header>
+                <ul>
                     <li class="with-chevron"><a href="{{pathFor 'about'}}">About</a></li>
                     <li class="with-chevron"><a href="#" id="logout">Logout</a></li>
                 </ul>
             </section>
+
+
         </div>
     </div>
 </template>

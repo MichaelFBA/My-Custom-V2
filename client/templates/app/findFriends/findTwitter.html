@@ -1,0 +1,17 @@
+<template name="findTwitter">
+    {{> nav black=true back=true}}
+    <div class="grid-block">
+        <div class="grid-content">
+            <p class="mts text-center">You have Twitter {{noOfTwitterFriends}} friends on My Custom</p>
+            <a href="#" class="button expand" target="_blank">Follow All</a>
+            <section class="block-list">
+                <ul>
+                    {{#each getTwContacts }}
+                    <li><a class="get-tw-friends-js" href="#">Find Facebook Contacts</a></li>
+                    {{/each}}
+                    <li><a class="get-tw-friends-js" href="#">Find Twitter Contacts</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</template>

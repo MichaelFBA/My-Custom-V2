@@ -7,7 +7,7 @@ if (typeof Meteor.settings === 'undefined')
 
 _.defaults(Meteor.settings, {
   twitter: {
-    consumerKey: "x6RsMJSyWP3IsePSeapT0t313", 
+    consumerKey: "x6RsMJSyWP3IsePSeapT0t313",
     secret: "euB6M6ddvkVPcZ04Ab2tIi90eVXLEFj19o5jaiIsSrU3G99rkj"
   },
   facebook:{
@@ -34,4 +34,4 @@ ServiceConfiguration.configurations.insert({
   secret: Meteor.settings.twitter.secret
 });
 
-process.env.MAIL_URL="smtp://info%40my-custom.com:zxcvbnm0@smtp.gmail.com:465/"; 
+process.env.MAIL_URL="smtp://info%40my-custom.com:zxcvbnm0@smtp.gmail.com:465/";
