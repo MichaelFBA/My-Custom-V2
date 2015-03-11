@@ -1,6 +1,6 @@
 <template name="notifications">
     {{# nav title='Notifications' black=true back=true}}
-    <a href="#" class="markAsRead primary">Mark as read</a> 
+    <a href="#" class="markAsRead primary">Mark as read</a>
     {{/nav}}
     <div class="grid-block">
         <section class="block-list with-icons man">
@@ -8,9 +8,9 @@
             {{#each getNotifications}}
                 <li class="with-chevron {{#if this.isRead}}read{{else}}notRead{{/if}}">
                     <img src="{{senderAvatar}}" alt="">
-                    <a class="note" href="{{objectType}}/{{objectId}}">
-                        <span class="avenirBlack">{{senderName}}</span> 
-                        {{#if equal activityType 'like'}} Liked your {{objectType}} {{/if}} 
+                    <a class="note" href="../{{objectType}}/{{objectId}}">
+                        <span class="avenirBlack">{{senderName}}</span>
+                        {{#if equal activityType 'like'}} Liked your {{objectType}} {{/if}}
                         {{#if equal activityType 'comment'}} Added some {{objectType}} {{/if}}
                         {{#if equal activityType 'activity'}} Added a new {{objectType}} {{/if}}
                         {{#if equal activityType 'follower'}} Is now following you {{/if}}

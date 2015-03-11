@@ -4,12 +4,18 @@
         <div class="grid-content">
             <p class="mts text-center">You have Twitter {{noOfTwitterFriends}} friends on My Custom</p>
             <a href="#" class="button expand" target="_blank">Follow All</a>
-            <section class="block-list">
+            <section class="block-list with-icons man">
                 <ul>
-                    {{#each getTwContacts }}
-                    <li><a class="get-tw-friends-js" href="#">Find Facebook Contacts</a></li>
-                    {{/each}}
-                    <li><a class="get-tw-friends-js" href="#">Find Twitter Contacts</a></li>
+                {{#each getTwContacts}}
+                    <li>
+                        <img src="{{profile_image_url}}" alt="">
+                        <span>{{name}}</span>
+                        <div class="switch">
+                            <input type="checkbox" id="pushNotifications" checked="{{isFollowed id}}">
+                            <label for="pushNotifications" class="man"></label>
+                        </div>
+                    </li>
+                {{/each}}
                 </ul>
             </section>
         </div>

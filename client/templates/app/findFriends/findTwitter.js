@@ -12,13 +12,20 @@ Template.findTwitter.helpers({
         return Template.instance().twFriends.get().length;
     },
 
+    isFollowed: function(id){
+      // return Meteor.call('isFollowedTwitter', id);
+    },
+
     getTwContacts : function(){
         var tw = Template.instance();
         Meteor.call('getTwitterFriends', function (error, result) {
             if(error){
                 console.error(error)
+            }else{
+                if(result)
+                  tw.twFriends.set( result.users )
             }
-            tw.twFriends.set( result )
+
         });
         return tw.twFriends.get();
     }

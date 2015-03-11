@@ -136,9 +136,13 @@ Meteor.publish('commonUserData', function(id) {
 });
 
 //--------------------------------------------------------------------------
-// Search
+// Find Twitter Friends
 //--------------------------------------------------------------------------
 
-Meteor.publish('blankSearch', function() {
-  return Wheels.find({}, {sort: {date: -1}, limit: 99});
+Meteor.publish('getTwitterFriends', function(id) {
+  return [
+    Activities.find({_id: id}),
+    Likes.find({activityId: id}),
+    Comments.find({discussion_id: id})
+  ]
 });

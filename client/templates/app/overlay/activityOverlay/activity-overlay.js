@@ -12,6 +12,13 @@ Template.activityOverlay.created = function() {
   // initialize the reactive variables
   instance.whichTemplate = new ReactiveVar("addNewMedia");
   instance.phoneImage = new ReactiveVar();
+  instance.geolocation = new ReactiveVar();
+
+  //Geo Location
+  var success = function(data){
+  	instance.geolocation.set(data);
+  }
+  navigator.geolocation.getCurrentPosition(success);
 }
 
 Template.activityOverlay.helpers({
@@ -49,7 +56,6 @@ Template.activityOverlay.events({
 		  }
 		  if (data) {
 		    instance.phoneImage.set(data);
-		    console.log('here')
 		  }
 		});
 
@@ -118,6 +124,7 @@ Template.activityOverlay.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 		var whichTemplate = instance.whichTemplate.get();
+		var geo = instance.geolocation.get();
 		var self = this;
 		var tweet = Session.get(TWEETING_KEY);
 		var facebook = Session.get(FACEBOOK_KEY);
@@ -151,7 +158,7 @@ Template.activityOverlay.events({
 					}else if(facebook){
 						postToFB(description, downloadUrl)
 					}
-					addWheels(type,make,model,year,description,downloadUrl,tweet, b64Data)
+					addWheels(type,make,model,year,description,downloadUrl,tweet, b64Data,geo)
 			        break;
 			    case "addToExisting":
 			    	var description = $(event.target).find('#description').val()
@@ -161,7 +168,7 @@ Template.activityOverlay.events({
 					}else if(facebook){
 						postToFB(description, downloadUrl)
 					}
-					addActivity(description,downloadUrl,relatedId,tweet, b64Data);
+					addActivity(description,downloadUrl,relatedId,tweet, b64Data,geo);
 			        break;
 			}
 
@@ -180,63 +187,66 @@ Template.activityOverlay.events({
    }
 });
 
-function addWheels(type,make,model,year,description,downloadUrl,tweet, b64DataForTwitter){
-	Meteor.call('createWheels', {
-	  type: type,
-	  make: make,
-	  model: model,
-	  year: year,
-	  description: description,
-	  image: downloadUrl,
-	  b64Data: b64DataForTwitter
-	}, tweet, Geolocation.currentLocation(), function(error, result) {
-	  if (error) {
-		alert(error.reason);
-		$('#progress').remove()
-	  } else {
-	  	notifyActivity(result)
+function addWheels(type,make,model,year,description,downloadUrl,tweet, b64DataForTwitter,geo){
 
-	  	Router.go('/')
 
-		Template.appBody.addNotification({
-		  action: 'View',
-		  title: 'Your custom was added.',
-		  callback: function() {
-			Template.garage.setTab('custom')
-		  }
-		});
-		Overlay.close();
-	  }
-	});
-}
-
-function addActivity(description,downloadUrl,wheelsId,tweet, b64DataForTwitter){
-	Meteor.call('createActivity', {
-		wheels: wheelsId,
-		description: description,
-		image: downloadUrl,
-		b64Data: b64DataForTwitter
-	}, tweet, Geolocation.currentLocation(), function(error, result) {
-		if (error) {
+		Meteor.call('createWheels', {
+		  type: type,
+		  make: make,
+		  model: model,
+		  year: year,
+		  description: description,
+		  image: downloadUrl,
+		  b64Data: b64DataForTwitter
+		}, tweet, geo, function(error, result) {
+		  if (error) {
 			alert(error.reason);
 			$('#progress').remove()
-	} else {
-		//Create DB Notifications
-		notifyActivity(result);
+		  } else {
+		  	notifyActivity(result)
 
-		Router.go('/')
+		  	Router.go('/')
 
-		//Notify user
-		Template.appBody.addNotification({
-			action: 'View',
-			title: 'New activity added.',
-			callback: function() {
-				Router.go('/');
-			}
+			Template.appBody.addNotification({
+			  action: 'View',
+			  title: 'Your custom was added.',
+			  callback: function() {
+				Template.garage.setTab('custom')
+			  }
+			});
+			Overlay.close();
+		  }
 		});
-		Overlay.close();
-	 }
-	});//Close activity
+}
+
+function addActivity(description,downloadUrl,wheelsId,tweet, b64DataForTwitter,geo){
+
+		Meteor.call('createActivity', {
+			wheels: wheelsId,
+			description: description,
+			image: downloadUrl,
+			b64Data: b64DataForTwitter
+		}, tweet, geo, function(error, result) {
+			if (error) {
+				alert(error.reason);
+				$('#progress').remove()
+		} else {
+			//Create DB Notifications
+			notifyActivity(result);
+
+			Router.go('/')
+
+			//Notify user
+			Template.appBody.addNotification({
+				action: 'View',
+				title: 'New activity added.',
+				callback: function() {
+					Router.go('/');
+				}
+			});
+			Overlay.close();
+		 }
+		});//Close activity
 }
 
 
@@ -289,4 +299,5 @@ function postToFB(description, imageUrl){
     }
   });
 }
+
 

@@ -19,7 +19,6 @@ matthew:foundation5-sass
 raix:push
 mondora:connect-with
 email
-mdg:geolocation
 edgee:slingshot
 random
 http
@@ -31,4 +30,4 @@ matteodem:easy-search
 mrt:twit
 
 
-npm-container
+meteorhacks:npm
