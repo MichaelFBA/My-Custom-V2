@@ -1,8 +1,8 @@
 <template name="garage">
-    {{#nav transparent=true}} 
+    {{#nav transparent=true}}
         {{#if notificationCount}}
-            <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><i class="fa fa-inbox primaryColor"> {{notificationCount}}</i></a> 
-        {{/if}} 
+            <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><i class="fa fa-inbox primaryColor"> {{notificationCount}}</i></a>
+        {{/if}}
     {{/nav}}
     <div class="grid-block shrink darkBg white">
         <div class="grid-block shrink">
@@ -28,28 +28,24 @@
         <div class="tabs">
             <div class="tab-item {{#if isActiveTab 'Info'}}is-active{{/if}}" title="Info">Info</div>
             <div class="tab-item {{#if isActiveTab 'Customs'}}is-active{{/if}}" title="Customs">Customs</div>
-            <div class="tab-item {{#if isActiveTab 'Posts'}}is-active{{/if}}" title="Posts">Posts</div>
             <div class="tab-item {{#if isActiveTab 'Likes'}}is-active{{/if}}" title="Likes">Likes</div>
             <div class="tab-item {{#if isActiveTab 'Followers'}}is-active{{/if}}" title="Followers">Followers</div>
             <div class="tab-item {{#if isActiveTab 'Following'}}is-active{{/if}}" title="Following">Following</div>
         </div>
     </div>
-    
+
     <div class="grid-block">
         <div class="tab-contents pan">
             <div class="tab-content p1rem {{#if isActiveTab 'Info'}}is-active{{/if}}" tab="tab">
                 {{#if profile.bio}}
                 <p class="mbn">{{profile.bio}}</p>
-                {{/if}} 
+                {{/if}}
                 {{#if profile.website}}
                 <p class="mbn avenirBlack">{{profile.website}}</p>
                 {{/if}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Customs'}}is-active{{/if}}" tab="tab">
                 {{> wheels_partial}}
-            </div>
-            <div class="tab-content {{#if isActiveTab 'Posts'}}is-active{{/if}}" tab="tab">
-                {{> activities_partial}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Likes'}}is-active{{/if}}" tab="tab">
                 <!-- {{> s3_upload}} -->

@@ -10,7 +10,7 @@ Template.activityOverlay.created = function() {
   // 1. Initialization
   var instance = this;
   // initialize the reactive variables
-  instance.whichTemplate = new ReactiveVar("addNewMedia");
+  instance.whichTemplate = new ReactiveVar("addCustom");
   instance.phoneImage = new ReactiveVar();
   instance.geolocation = new ReactiveVar();
 
@@ -138,15 +138,6 @@ Template.activityOverlay.events({
 		Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0))
 		uploader.send(blob, function (error, downloadUrl) {
 			switch(whichTemplate) {
-			    case "addNewMedia":
-					var description = $(event.target).find('#description').val()
-					if(!tweet){
-						b64Data = '';
-					}else if(facebook){
-						postToFB(description, downloadUrl)
-					}
-					addActivity(description,downloadUrl,"",tweet, b64Data);
-			        break;
 			    case "addCustom":
 			        var type = $(event.target).find('#type').val()
 					var make = $(event.target).find('#make').val()
