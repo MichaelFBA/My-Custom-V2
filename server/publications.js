@@ -40,6 +40,12 @@ Meteor.publish('wheels', function(id, limit) {
   return Wheels.find({userId: id }, {limit: limit});
 });
 
+// Publish Wheels
+Meteor.publish('media', function(id, limit) {
+  // Meteor._sleepForMs(1000);
+  return Media.find({'data.user.id': id }, {limit: limit});
+});
+
 // Publish Activities
 Meteor.publish('activities', function(id, limit) {
   // Meteor._sleepForMs(1000);

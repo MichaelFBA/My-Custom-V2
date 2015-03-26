@@ -20,3 +20,7 @@ private/prod/PushChatKey.pem
 server/push.js
 
 server/push.js
+
+client/lib/youtube/auth.js
+
+server/_settings.js

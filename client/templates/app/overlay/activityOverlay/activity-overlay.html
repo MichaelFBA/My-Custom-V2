@@ -29,10 +29,18 @@
             </div>
             <div class="grid-block">
                 <div class="grid-content">
+                    <a class="js-attach-video block mbs">
+                        <span class="fa fa-video-camera fa-3x"></span>
+                    </a>
+                    <p class="subtext-camera">Take video</p>
+                </div>
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
                     <a class="js-camera-roll block mbs">
                         <i class="fa fa-picture-o fa-3x"></i>
                     </a>
-                    <p class="subtext-camera">Add from gallery</p>
+                    <p class="subtext-camera">Add from phone</p>
                 </div>
             </div>
         </div>
@@ -43,18 +51,26 @@
 
             <form class="form-share">
                 <div class="grid-block">
-                    <div class="small-12 medium-6 grid-content">
 
-                        <label>What do you want to do?</label>
-                        <select name="" id="makeChoice">
-                            <option value="addCustom">Create a custom</option>
-                            {{#if getWheels}}
-                            <option value="addToExisting">Add to existing custom</option>
-                            {{/if}}
-                        </select>
+
+
+
+
+                    <div class="small-12 medium-6 grid-content">
+                        <label>
+                            Add a description... You can include #tags which make it easier for others to find.
+                            <textarea id="description" rows="4" placeholder="Write a caption..."></textarea>
+                        </label>
                     </div>
 
-                    {{> customChoice}}
+                    {{#if getVideoSize}}
+                        {{#with getVideoSize}}
+                        {{debug}}
+                        <div class="small-12 medium-6 grid-content">
+                            <label>Your video is approximately {{formatSizeUnits this}}</label>
+                        </div>
+                        {{/with}}
+                    {{/if}}
 
                     <div class="small-12 medium-6 grid-content">
                         <label>Share on social media</label>
