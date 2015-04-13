@@ -1,12 +1,11 @@
 
 //Google O-Auth signing to pass back to client
 Meteor.methods({
-    uploadVideo: function(video) {
+    getYoutubeToken: function() {
 
 
         var now = moment();
         var result;
-
         if (now.diff(Meteor.settings.youtube.expiration, 'minutes') >= 50) {
             console.log('Getting new access token...')
 
@@ -19,7 +18,6 @@ Meteor.methods({
 
             try {
                 result = HTTP.call("POST", 'https://www.googleapis.com/oauth2/v3/token', options);
-                console.log(result)
                 Meteor.settings.youtube.access_token = result.data.access_token;
                 Meteor.settings.youtube.expiration = moment();
 

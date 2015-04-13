@@ -76,12 +76,7 @@ Meteor.publish('following', function(id, limit) {
 // Publish Likes
 Meteor.publish('likes', function(id, limit) {
   // Meteor._sleepForMs(1000);
-  var likesCursor = Likes.find({likedById: id}, {limit: limit});
-  var ids = likesCursor.map(function(p) { return p.activityId });
-  return [
-	Likes.find({likedById: id}, {limit: limit}),
-	Activities.find({ _id: { $in: ids } }, {limit: limit})
-  ]
+  return Media.find({ id: { $in: 'data.likes.data' } }, {limit: limit});
 });
 
 //--------------------------------------------------------------------------

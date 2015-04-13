@@ -36,7 +36,7 @@ Template.likes.created = function () {
   // 3. Cursor
 
   instance.likes = function() {
-    return Likes.find({ likedById: Meteor.userId() }, {limit: instance.loaded.get()});
+    return Media.find({ likedById: Meteor.userId() }, {limit: instance.loaded.get()});
   }
 
 };

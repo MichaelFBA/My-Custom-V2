@@ -110,26 +110,49 @@ Template.activityOverlay.events({
         var self = this;
         var tweet = Session.get(TWEETING_KEY);
         var facebook = Session.get(FACEBOOK_KEY);
+        var b64Data;
 
-        //Upload to AmazonS3
-        var uploader = new Slingshot.Upload("myFileUploads");
-        var contentType = 'image/jpeg';
-        var b64Data = instance.phoneImage.get().replace(/^data.*base64,/, '');
-        var blob = b64toBlob(b64Data, contentType);
+        //Image
+        if( instance.phoneImage.get() ){
+        var b64Data = instance.phoneImage.get().replace(/^data.*base64,/, '')
+        }
+        //Video
+        var video = instance.phoneVideo.get();
 
-        Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0))
+        if(video){
+            console.log('video')
+            // Blaze.renderWithData(Template.progressBar, 0, $('#progress').get(0))
+            Meteor.call('getYoutubeToken', function(error, result) {
+                if (error) {
+                    console.error(error)
+                }
+                postVideo(result, video[0].fullPath)
+            });
 
-        uploader.send(blob, function(error, downloadUrl) {
+        }else{
+            console.log('image')
+            //Upload to AmazonS3
+            var uploader = new Slingshot.Upload("myFileUploads");
+            var contentType = 'image/jpeg';
+            var blob = b64toBlob(b64Data, contentType);
 
-            var description = $(event.target).find('#description').val()
-            if (!tweet) {
-                b64Data = '';
-            } else if (facebook) {
-                postToFB(description, downloadUrl)
-            }
-            addActivity(description, downloadUrl, relatedId, tweet, b64Data, geo);
+            Blaze.renderWithData(Template.progressBar, uploader, $('#progress').get(0))
 
-        }); //Close upload
+            uploader.send(blob, function(error, downloadUrl) {
+
+                var description = $(event.target).find('#description').val()
+                if (!tweet) {
+                    b64Data = '';
+                } else if (facebook) {
+                    postToFB(description, downloadUrl)
+                }
+                addActivity(description, downloadUrl, relatedId, tweet, b64Data, geo);
+
+            }); //Close upload
+        }
+
+
+
     },
 
     'click #connectFB': function(event) {
@@ -266,3 +289,62 @@ function postToFB(description, imageUrl) {
         }
     });
 }
+
+function postVideo(accessToken, fileURI) {
+    var metadata = {
+        snippet: {
+            title: "test",
+            description: "test",
+            tags: ["youtube-cors-upload"],
+            categoryId: 21
+        },
+        status: {
+            privacyStatus: "unlisted"
+        }
+    }
+
+    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = 'test';
+    options.mimeType = "video/mp4";
+    options.chunkedMode = false;
+
+    options.headers = {
+        Authorization: "Bearer "+ accessToken,
+        "Access-Control-Allow-Origin": "http://meteor.local"
+    };
+
+    var params = new Object();
+    params.part = Object.keys(metadata).join(',')
+
+    options.params = params;
+    console.log(options)
+    var ft = new FileTransfer();
+    ft.upload(fileURI, "https://www.googleapis.com/upload/youtube/v3/videos?part=snippet", win, fail, options, true);
+
+    ft.onprogress = function(progressEvent) {
+        if (progressEvent.lengthComputable) {
+            // console.log(progressEvent)
+          // loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+        } else {
+            console.log('something not loading')
+          // loadingStatus.increment();
+        }
+        console.log(progressEvent.loaded / progressEvent.total);
+    };
+}
+
+function win(r) {
+    console.log(r)
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+}
+
+function fail(error) {
+    console.log(error)
+    // alert("An error has occurred: Code = " + error.code);
+    console.log("upload error source " + error.source);
+    console.log("upload error target " + error.target);
+}
+

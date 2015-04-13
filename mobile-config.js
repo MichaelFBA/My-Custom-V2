@@ -42,7 +42,12 @@ App.launchScreens({
   'android_xhdpi_landscape': 'resources/splash/splash-1280x720.png'
 });
 
+App.accessRule('http://*');
+App.accessRule('https://*');
+App.accessRule('*');
+
 App.setPreference('StatusBarOverlaysWebView', 'false');
 App.setPreference('StatusBarBackgroundColor', '#000000');
 App.setPreference('Orientation', 'portrait');
+
 
