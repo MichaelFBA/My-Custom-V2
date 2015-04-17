@@ -1,8 +1,6 @@
 <template name="garage">
     {{#nav transparent=true}}
-        {{#if notificationCount}}
-            <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><i class="fa fa-inbox primaryColor"> {{notificationCount}}</i></a>
-        {{/if}}
+        <a href="{{pathFor 'notifications'}}" class="nav-item js-share"><i class="fa fa-inbox primaryColor"> {{notificationCount}}</i></a>
     {{/nav}}
     <div class="grid-block shrink darkBg white">
         <div class="grid-block shrink">
@@ -45,7 +43,7 @@
                 {{/if}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Customs'}}is-active{{/if}}" tab="tab">
-                {{> media_partial}}
+                {{> wheels_partial}}
             </div>
             <div class="tab-content {{#if isActiveTab 'Likes'}}is-active{{/if}}" tab="tab">
                 <!-- {{> s3_upload}} -->

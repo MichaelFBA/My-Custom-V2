@@ -65,6 +65,9 @@
     margin-right: auto !important;
     max-width: initial !important;
 }
+.w100{
+  width: 100%;
+}
 .img-circle {
     border-radius: 50%;
 }
@@ -153,6 +156,14 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.bottom-nav-img{
+  position: absolute;
+  bottom:-30px;
+  width: 100%;
+  max-width: none;
+  pointer-events: none;
 }
 
 

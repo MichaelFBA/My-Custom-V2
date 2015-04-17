@@ -8,11 +8,10 @@
             </a>
         {{/nav}}
 
-        {{#unless attachedImage}}
+        {{#unless hasCaptured}}
 
         <div class="grid-block">
             <div class="grid-content text-center">
-
                 <img class="mtm image75" src="../img/app/snake-head.svg" alt="Snake" />
                 <h2 class="white avenirBlack mbn tight">Whats new</h2>
                 <p>Share your latest custom addition.</p>
@@ -47,7 +46,24 @@
         {{else}}
         <div class="grid-block whiteBg">
             <div class="grid-content">
-            <div class="image-profile medium mvs" style="background-image: url('{{attachedImage}}')"></div>
+            {{#if attachedImage}}
+                <div class="image-profile medium mvs" style="background-image: url('{{attachedImage}}')"></div>
+            {{/if}}
+            <!-- {{#if attachedVideo}}
+                <video width="100%" controls>
+                  <source src="{{attachedVideo}}">
+                  Your browser does not support HTML5 video.
+                </video>
+
+                {{#if getVideoSize}}
+                    {{#with getVideoSize}}
+                    <div class="small-12 medium-6 grid-content">
+                        <label>Your video is approximately {{formatSizeUnits this}}</label>
+                    </div>
+                    {{/with}}
+                {{/if}}
+
+            {{/if}} -->
 
             <form class="form-share">
                 <div class="grid-block">
@@ -57,17 +73,9 @@
                             Add a description... You can include #tags which make it easier for others to find.
                             <textarea id="description" rows="4" placeholder="Write a caption..."></textarea>
                         </label>
-                        <input id="file" type="file" accept="video/*" capture>
                     </div>
 
-                    {{#if getVideoSize}}
-                        {{#with getVideoSize}}
-                        {{debug}}
-                        <div class="small-12 medium-6 grid-content">
-                            <label>Your video is approximately {{formatSizeUnits this}}</label>
-                        </div>
-                        {{/with}}
-                    {{/if}}
+
 
                     <div class="small-12 medium-6 grid-content">
                         <label>Share on social media</label>
@@ -79,10 +87,7 @@
 
                     <div class="small-12 medium-6 grid-content">
 
-                        <div id="progress">
-                            <div id="percent-transferred"></div>%
-                            <progress value="0" max="1"></progress>
-                        </div>
+                        <div id="progress"></div>
                         <button type='submit' class="button primary expand">Share {{percent_uploaded}}</button>
                     </div>
                 </div>

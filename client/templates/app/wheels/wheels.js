@@ -1,23 +1,14 @@
-Template.wheels.helpers({
-    relatedActivities: function() {
-        return Activities.find({
-            wheels: this._id
-        }).fetch();
-    },
-    
-    getUserImage: function(id) {
-        return Meteor.users.findOne(id).profile.picture;
-    },
+Template.wheelCard.helpers({
 
     likeCount: function() {
         return Likes.find({
-            activityId: this._id
+            wheelsId: this._id
         }).count();
     },
 
     isliked: function() {
         return Likes.find({
-            activityId: this._id,
+            wheelsId: this._id,
             likedById: Meteor.userId()
         }).fetch();
     },
@@ -37,10 +28,11 @@ Template.wheels.helpers({
             userId: Meteor.userId()
         }).fetch();
     }
+
 });
 
 
-Template.wheels.events({
+Template.wheelCard.events({
 
     'click #like': function(event) {
         event.preventDefault();
@@ -50,7 +42,7 @@ Template.wheels.events({
             recipientId: this.userId,
             activityType: 'like',
             objectId: this._id,
-            objectType: 'custom'
+            objectType: 'wheels'
         }
         Meteor.call('createNotification', notification);
     },
@@ -62,7 +54,7 @@ Template.wheels.events({
             recipientId: this.userId,
             activityType: 'like',
             objectId: this._id,
-            objectType: 'custom'
+            objectType: 'wheels'
         }
         Meteor.call('removeNotification', notification);
     }

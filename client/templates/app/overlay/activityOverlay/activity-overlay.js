@@ -11,20 +11,47 @@ Template.activityOverlay.created = function() {
     var instance = this;
     // initialize the reactive variables
     instance.whichTemplate = new ReactiveVar("addCustom");
-    instance.phoneImage = new ReactiveVar();
-    instance.phoneVideo = new ReactiveVar();
-    instance.geolocation = new ReactiveVar();
+    instance.phoneImage = new ReactiveVar(false);
+    instance.phoneVideo = new ReactiveVar(false);
+    instance.geolocation = new ReactiveVar(null);
+
+    Session.set("video", null);
 
     //Geo Location
-    var success = function(data) {
+    function onSuccess(data) {
+        console.log(data)
         instance.geolocation.set(data);
     }
-    navigator.geolocation.getCurrentPosition(success);
+    function onError(error) {
+        console.log('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+    function onDeviceReady() {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+    document.addEventListener("deviceready", onDeviceReady, false);
+
 }
 
 Template.activityOverlay.helpers({
-    attachedImage: function() {
+    hasCaptured: function() {
         return Template.instance().phoneImage.get() || Template.instance().phoneVideo.get()
+    },
+
+    attachedImage: function() {
+        return Template.instance().phoneImage.get()
+    },
+
+    attachedVideo: function() {
+        function result(data){
+            console.log(data)
+            Session.set("video", data.fullPath);
+        }
+        function fail(data){
+            console.error(data)
+        }
+        window.resolveLocalFileSystemURL( Template.instance().phoneVideo.get()[0].localURL , result, fail);
+        return Session.get("video");
     },
 
     getVideoSize: function() {
@@ -41,7 +68,6 @@ Template.activityOverlay.events({
     'click .js-attach-video': function(event,instance) {
     	// capture callback
 		var captureSuccess = function(mediaFiles) {
-			console.log(mediaFiles)
 			instance.phoneVideo.set(mediaFiles);
 		};
 
@@ -111,26 +137,31 @@ Template.activityOverlay.events({
         var tweet = Session.get(TWEETING_KEY);
         var facebook = Session.get(FACEBOOK_KEY);
         var b64Data;
-
-        //Image
-        if( instance.phoneImage.get() ){
-        var b64Data = instance.phoneImage.get().replace(/^data.*base64,/, '')
-        }
-        //Video
         var video = instance.phoneVideo.get();
 
+        var wheels = {}
+        wheels.description = $(event.target).find('#description').val()
+        wheels.tweet = tweet
+
+        if( getHashTags(wheels.description).length >=1 ){
+            wheels.tags = getHashTags(wheels.description);
+        }
+
+        if( geo ){
+            wheels.location = geo;
+        }
+
         if(video){
-            console.log('video')
-            // Blaze.renderWithData(Template.progressBar, 0, $('#progress').get(0))
             Meteor.call('getYoutubeToken', function(error, result) {
                 if (error) {
                     console.error(error)
                 }
-                postVideo(result, video[0].fullPath)
+                postVideo(result, video[0].fullPath, wheels)
             });
 
         }else{
-            console.log('image')
+        //Image
+            var b64Data = instance.phoneImage.get().replace(/^data.*base64,/, '')
             //Upload to AmazonS3
             var uploader = new Slingshot.Upload("myFileUploads");
             var contentType = 'image/jpeg';
@@ -140,13 +171,14 @@ Template.activityOverlay.events({
 
             uploader.send(blob, function(error, downloadUrl) {
 
-                var description = $(event.target).find('#description').val()
-                if (!tweet) {
-                    b64Data = '';
-                } else if (facebook) {
-                    postToFB(description, downloadUrl)
-                }
-                addActivity(description, downloadUrl, relatedId, tweet, b64Data, geo);
+            wheels.image = downloadUrl;
+
+            if (tweet) {
+                wheels.b64Data = b64Data;
+            } else if (facebook) {
+                postToFB(wheels.description, wheels.image)
+            }
+            createWheels(wheels);
 
             }); //Close upload
         }
@@ -169,26 +201,28 @@ Template.activityOverlay.events({
     }
 });
 
-function addWheels(type, make, model, year, description, downloadUrl, tweet, b64DataForTwitter, geo) {
+function getHashTags(words){
+    var tagslistarr = words.split(' ');
+    var arr=[];
+    $.each(tagslistarr,function(i,val){
+        if(tagslistarr[i].indexOf('#') == 0){
+          arr.push(tagslistarr[i]);
+        }
+    });
+    return arr;
+}
+
+function createWheels(wheels) {
 
 
-    Meteor.call('createWheels', {
-        type: type,
-        make: make,
-        model: model,
-        year: year,
-        description: description,
-        image: downloadUrl,
-        b64Data: b64DataForTwitter
-    }, tweet, geo, function(error, result) {
+    Meteor.call('createWheels', wheels , function(error, result) {
         if (error) {
             alert(error.reason);
             $('#progress').remove()
         } else {
-            notifyActivity(result)
+            sendNotifications(result)
 
             Router.go('/')
-
             Template.appBody.addNotification({
                 action: 'View',
                 title: 'Your custom was added.',
@@ -201,38 +235,7 @@ function addWheels(type, make, model, year, description, downloadUrl, tweet, b64
     });
 }
 
-function addActivity(description, downloadUrl, wheelsId, tweet, b64DataForTwitter, geo) {
-
-    Meteor.call('createActivity', {
-        wheels: wheelsId,
-        description: description,
-        image: downloadUrl,
-        b64Data: b64DataForTwitter
-    }, tweet, geo, function(error, result) {
-        if (error) {
-            alert(error.reason);
-            $('#progress').remove()
-        } else {
-            //Create DB Notifications
-            notifyActivity(result);
-
-            Router.go('/')
-
-            //Notify user
-            Template.appBody.addNotification({
-                action: 'View',
-                title: 'New activity added.',
-                callback: function() {
-                    Router.go('/');
-                }
-            });
-            Overlay.close();
-        }
-    }); //Close activity
-}
-
-
-function notifyActivity(activityId) {
+function sendNotifications(wheelsId) {
     var followers = Followers.find({
         userId: Meteor.userId()
     }).fetch()
@@ -241,9 +244,9 @@ function notifyActivity(activityId) {
 
         var notification = {
             recipientId: value.followerId,
-            activityType: 'activity',
-            objectId: activityId,
-            objectType: 'activity'
+            activityType: 'wheels',
+            objectId: wheelsId,
+            objectType: 'wheels'
         }
         Meteor.call('createNotification', notification);
 
@@ -290,7 +293,8 @@ function postToFB(description, imageUrl) {
     });
 }
 
-function postVideo(accessToken, fileURI) {
+function postVideo(accessToken, fileURI, wheelsObj) {
+    var wheels = wheelsObj
     var metadata = {
         snippet: {
             title: "test",
@@ -318,9 +322,28 @@ function postVideo(accessToken, fileURI) {
     params.part = Object.keys(metadata).join(',')
 
     options.params = params;
-    console.log(options)
+
+    function win(r) {
+    console.log(r.response)
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+    wheels.video = JSON.parse(r.response);
+    createWheels(wheels);
+    }
+
+    function fail(error) {
+        console.log(error)
+        // alert("An error has occurred: Code = " + error.code);
+        console.log("upload error source " + error.source);
+        console.log("upload error target " + error.target);
+    }
+
     var ft = new FileTransfer();
     ft.upload(fileURI, "https://www.googleapis.com/upload/youtube/v3/videos?part=snippet", win, fail, options, true);
+
+    var progress = 0;
+    Blaze.renderWithData(Template.progressBar, progress, $('#progress').get(0))
 
     ft.onprogress = function(progressEvent) {
         if (progressEvent.lengthComputable) {
@@ -331,20 +354,11 @@ function postVideo(accessToken, fileURI) {
           // loadingStatus.increment();
         }
         console.log(progressEvent.loaded / progressEvent.total);
+
+        progress = progressEvent.loaded / progressEvent.total;
+
     };
 }
 
-function win(r) {
-    console.log(r)
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
-}
 
-function fail(error) {
-    console.log(error)
-    // alert("An error has occurred: Code = " + error.code);
-    console.log("upload error source " + error.source);
-    console.log("upload error target " + error.target);
-}
 

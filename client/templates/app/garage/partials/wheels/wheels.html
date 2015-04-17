@@ -3,11 +3,16 @@
     {{#each wheels}}
     <a href="{{pathFor 'wheels' _id=_id}}">
 			<div class="grid-block shrink">
-                <img src="//wit.wurfl.io/w_500/h_300/m_cropbox/{{image}}">
+                {{#if image}}
+                    <img class="w100" src="//wit.wurfl.io/w_460/h_550/m_cropbox/{{image}}">
+                {{/if}}
+                {{#if video}}
+                    <img src="//wit.wurfl.io/w_500/h_300/m_cropbox/{{video.snippet.thumbnails.high.url}}">
+                {{/if}}
             </div>
             <div class="grid-block">
                 <div class="grid-content">
-                    <h5 class="mvs">{{make}} {{model}} <i class="fa fa-chevron-right right"></i></h5>
+                    <h5 class="mvs"><i class="fa fa-chevron-right right"></i></h5>
                 </div>
             </div>
 		</a>

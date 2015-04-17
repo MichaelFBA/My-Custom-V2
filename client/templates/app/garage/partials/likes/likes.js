@@ -36,7 +36,7 @@ Template.likes.created = function () {
   // 3. Cursor
 
   instance.likes = function() {
-    return Media.find({ likedById: Meteor.userId() }, {limit: instance.loaded.get()});
+    return Likes.find({ likedById: Meteor.userId() }, {limit: instance.loaded.get()});
   }
 
 };
@@ -55,15 +55,23 @@ Template.likes.helpers({
     return Template.instance().likes().count() >= Template.instance().limit.get();
   },
   //getActivity Image
-  getActivityImage: function(id){
-    var data = Activities.findOne(id);
+  getWheelsImage: function(id){
+    var data = Wheels.findOne(id);
     if (data) {
       return data.image;
     }
     return "no data yet";
   },
-  getActivityId: function(id){
-    var data = Activities.findOne(id);
+  getWheelsVideoImage: function(id){
+    var data = Wheels.findOne(id);
+    if (data) {
+      return data.video.snippet.thumbnails.high.url;
+    }
+    return "no data yet";
+  },
+
+  getWheelsId: function(id){
+    var data = Wheels.findOne(id);
     if (data) {
       return data._id;
     }

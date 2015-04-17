@@ -1,17 +1,36 @@
-<template name="activities">
-	<div class="card">
-        <a href="{{pathFor 'activity' _id=_id}}">
-            <img src="//wit.wurfl.io/w_460/h_550/m_cropbox/{{image}}">
-        </a>
+<template name="wheelCard">
+    {{debug}}
+    <div class="card">
+        {{#if image}}
+        <img class="w100" src="//wit.wurfl.io/w_460/h_550/m_cropbox/{{image}}">
+        {{/if}}
+        {{#if video}}
+        <div class="flex-video">
+        <iframe type="text/html"
+            width="640"
+            height="385"
+            src="http://www.youtube.com/embed/{{video.id}}"
+            frameborder="0">
+        </iframe>
+        </div>
+<!--         <video width="500" height="300" id="player1" preload="none">
+            <source type="video/youtube" src="http://www.youtube.com/watch?v={{video.id}}" />
+        </video> -->
+        <!-- <img class="w100" src="//wit.wurfl.io/w_460/h_550/m_cropbox/{{video.snippet.thumbnails.high.url}}"> -->
+        {{/if}}
         <div class="card-section relative">
             <a class="userAvatar block" href="{{pathFor 'garage' _id=userId}}"><img class="img-circle" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{userAvatar}}"></a>
             <p class="mbn">{{description}}</p>
+            {{#each tags}}
+            <a href="#">{{this}}</a>
+            {{/each}}
+            <br/>
             {{#if place}}
                 <small class="subheader">{{place}}</small>
             {{/if}}
 
             <div class="mts">
-            	<small class="subheader pull-right txtM">{{formatTime date }}</small>
+                <small class="subheader pull-right txtM">{{formatTime date }}</small>
                 {{#if isliked}}
                     <a id="unlike"><i class="fa fa-1-5 fa-thumbs-up mrt"></i> </a>
                 {{else}}
@@ -27,5 +46,5 @@
                 {{#if commentCount}} <strong>{{commentCount}}</strong>{{/if}}
             </div>
         </div>
-    </div>
+     </div>
 </template>

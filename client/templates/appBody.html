@@ -2,13 +2,15 @@
 	{{> overlay}}
 	<div id="content-container" class="grid-frame vertical">
 		{{> yield}}
-		  <ul class="dark man menu-bar icon-top">
+		 <img class="bottom-nav-img" src="/img/app/menu-bg.png">
+		 <ul class="dark man menu-bar icon-top middle">
 			<li><a href="{{pathFor 'home'}}"><img src="/img/app/tabs/i_tab_feed.png">Home</a></li>
 			<li><a href="{{pathFor 'search'}}"><img src="/img/app/tabs/i_tab_search.png">Search</a></li>
 			<li><a href="#" class="js-attach-quick-image"><img src="/img/app/tabs/i_tab_shot.png">Camera</a></li>
 			<li><a href="{{pathFor 'garage' _id=currentUser._id}}"><img src="/img/app/tabs/i_tab_user.png">Garage</a></li>
 			<li><a href="{{pathFor 'settings'}}"><img src="/img/app/tabs/i_tab_item.png">Settings</a></li>
 		  </ul>
+
 	</div>
 	<div class="notifications">
 		{{#unless connected}}

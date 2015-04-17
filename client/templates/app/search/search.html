@@ -5,6 +5,8 @@
             <div class="form-group">
                 <label class="title-callout mts">Search</label>
                 {{> esInput id="search" index="wheels" placeholder="Search for type, maker, year and more..." }}
+                {{> esAutosuggest index="wheels" placeholder="search wheels"}}
+                {{> esAutosuggest index="tags" placeholder="Add tags"}}
             </div>
 
 
@@ -12,7 +14,7 @@
                 {{#esEach index="wheels"}}
                     <li class="pan">
                         <a class="block" href="{{pathFor 'wheels' _id=_id}}">
-                            <img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}">
+                            <img class="w100" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{image}}">
                         </a>
                     </li>
                 {{/esEach}}

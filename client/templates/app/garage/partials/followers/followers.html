@@ -4,7 +4,7 @@
         {{#each followers}}
             <li>
                 <img src="{{getUserImage followerId}}" alt="">
-                <a href="{{pathFor 'wheels' _id=followerId}}">{{getUserName followerId}}</a>
+                <a href="{{pathFor 'garage' _id=followerId}}">{{getUserName followerId}}</a>
             </li>
         {{/each}}
         </ul>

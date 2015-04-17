@@ -12,14 +12,14 @@ Meteor.publish('latestActivity', function(id, limit) {
   ids = _.union(id,ids) // user current user to query
 
   //Get Activity Ids
-  var ActivitiesCursor = Activities.find({ userId: { $in: ids } })
-  var activityIds = ActivitiesCursor.map(function( p ) { return p._id });
+  var WheelsCursor = Wheels.find({ userId: { $in: ids } })
+  var wheelsIds = WheelsCursor.map(function( p ) { return p._id });
 
   return [
     // Followers.find({followerId: id }, {limit: limit}),
-    Activities.find({ userId: { $in: ids } }, {sort: {date: -1}, limit: limit}),
-    Likes.find({ activityId: { $in: activityIds } }),
-    Comments.find({ discussion_id: { $in: activityIds } }),
+    Wheels.find({ userId: { $in: ids } }, {sort: {date: -1}, limit: limit}),
+    Likes.find({ wheelsId: { $in: wheelsIds } }),
+    Comments.find({ discussion_id: { $in: wheelsIds } }),
   ]
 });
 
@@ -38,18 +38,6 @@ Meteor.publish('getGarage', function(id) {
 Meteor.publish('wheels', function(id, limit) {
   // Meteor._sleepForMs(1000);
   return Wheels.find({userId: id }, {limit: limit});
-});
-
-// Publish Wheels
-Meteor.publish('media', function(id, limit) {
-  // Meteor._sleepForMs(1000);
-  return Media.find({'data.user.id': id }, {limit: limit});
-});
-
-// Publish Activities
-Meteor.publish('activities', function(id, limit) {
-  // Meteor._sleepForMs(1000);
-  return Activities.find({userId: id }, {limit: limit});
 });
 
 // Publish Followers
@@ -76,9 +64,13 @@ Meteor.publish('following', function(id, limit) {
 // Publish Likes
 Meteor.publish('likes', function(id, limit) {
   // Meteor._sleepForMs(1000);
-  return Media.find({ id: { $in: 'data.likes.data' } }, {limit: limit});
+  var likesCursor = Likes.find({likedById: id}, {limit: limit});
+  var ids = likesCursor.map(function(p) { return p.wheelsId });
+  return [
+  Likes.find({likedById: id}, {limit: limit}),
+  Activities.find({ _id: { $in: ids } }, {limit: limit})
+  ]
 });
-
 //--------------------------------------------------------------------------
 // Activities Page
 //--------------------------------------------------------------------------
@@ -86,7 +78,7 @@ Meteor.publish('likes', function(id, limit) {
 Meteor.publish('getActivity', function(id) {
   return [
     Activities.find({_id: id}),
-    Likes.find({activityId: id}),
+    Likes.find({wheelsId: id}),
     Comments.find({discussion_id: id})
   ]
 });
@@ -96,24 +88,19 @@ Meteor.publish('getActivity', function(id) {
 //--------------------------------------------------------------------------
 
 Meteor.publish('getWheels', function(id) {
-  //Get Activities IDs
-  var activitiesCursor = Activities.find({wheels: id});
-  var activityIds = activitiesCursor.map(function(a) {
-    return a._id;
-  });
 
   //Get Wheels IDs
   var wheelsCursor = Wheels.find({_id: id});
   var wheelsId = wheelsCursor.map(function(a) {
     return a._id;
   });
-  var allIds = _.union(activityIds,wheelsId)
+
 
   return [
       Wheels.find({_id: id}),
       Activities.find({wheels:id}),
-      Likes.find({ activityId: { $in: allIds } }),
-      Comments.find({ discussion_id: { $in: allIds } })
+      Likes.find({ wheelsId: { $in: wheelsId } }),
+      Comments.find({ discussion_id: { $in: wheelsId } })
     ]
 });
 
@@ -142,8 +129,8 @@ Meteor.publish('commonUserData', function(id) {
 
 Meteor.publish('getTwitterFriends', function(id) {
   return [
-    Activities.find({_id: id}),
-    Likes.find({activityId: id}),
+    Wheels.find({_id: id}),
+    Likes.find({wheelsId: id}),
     Comments.find({discussion_id: id})
   ]
 });

@@ -2,7 +2,15 @@
     <ul class="small-block-grid-3">
     {{#each likes}}
     <li class="pan">
-        <a class="block" href="../activity/{{getActivityId activityId}}"><img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{getActivityImage activityId}}"></a>
+        <a class="block" href="../wheels/{{getWheelsId wheelsId}}">
+        {{#if getWheelsImage wheelsId}}
+            <img class="w100" src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{getWheelsImage wheelsId}}">
+        {{/if}}
+        {{#if getWheelsVideoImage wheelsId}}
+            <img src="//wit.wurfl.io/w_150/h_150/m_cropbox/{{ getWheelsVideoImage wheelsId }}">
+        {{/if}}
+        </a>
+
     </li>
     {{/each}}
     </ul>
